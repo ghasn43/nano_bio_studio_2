@@ -7,6 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Dict, Tuple
 
+# NumPy compatibility: trapezoid (NumPy 2.0+) vs trapz (NumPy <2.0)
+if hasattr(np, 'trapezoid'):
+    np_trapz = np.trapezoid
+else:
+    np_trapz = np.trapz
+
 def two_compartment_model(
     dose: float,
     kabs: float,
@@ -116,8 +122,8 @@ def calculate_pk_parameters(
     T_max_tissue = time[np.argmax(C_tissue)]
     
     # AUC (area under curve) - trapezoidal rule
-    AUC_plasma = np.trapezoid(C_plasma, time)
-    AUC_tissue = np.trapezoid(C_tissue, time)
+    AUC_plasma = np_trapz(C_plasma, time)
+    AUC_tissue = np_trapz(C_tissue, time)
     
     # Half-life (approximate from terminal phase)
     # Find time when concentration drops to 50% of C_max
