@@ -1128,3 +1128,62 @@ def count_admin_users() -> int:
     count = cur.fetchone()[0]
     conn.close()
     return count
+
+
+# ============================================================
+# AuthManager Class - Wrapper for backward compatibility
+# ============================================================
+
+class AuthManager:
+    """
+    Authentication Manager class for object-oriented interface.
+    Wraps function-based auth module for compatibility.
+    """
+    
+    def __init__(self):
+        """Initialize the auth manager"""
+        init_db()
+    
+    def authenticate(self, username: str, password: str) -> Tuple[bool, str]:
+        """Authenticate a user"""
+        return authenticate(username, password)
+    
+    def register_user(self, username: str, password: str, email: str = "", role: str = "student") -> Tuple[bool, str]:
+        """Register a new user"""
+        return register_user(username, password, email, role)
+    
+    def change_password(self, username: str, old_password: str, new_password: str) -> Tuple[bool, str]:
+        """Change user password"""
+        return change_password(username, old_password, new_password)
+    
+    def reset_password(self, username: str, new_password: str) -> Tuple[bool, str]:
+        """Reset user password (admin only)"""
+        return reset_password(username, new_password)
+    
+    def get_user_info(self, username: str) -> Optional[Dict]:
+        """Get user information"""
+        return get_user_info(username)
+    
+    def get_all_users(self) -> List[Dict]:
+        """Get all users"""
+        return get_all_users()
+    
+    def update_user_role(self, username: str, new_role: str) -> Tuple[bool, str]:
+        """Update user role"""
+        return update_user_role(username, new_role)
+    
+    def deactivate_user(self, username: str) -> Tuple[bool, str]:
+        """Deactivate a user"""
+        return deactivate_user(username)
+    
+    def activate_user(self, username: str) -> Tuple[bool, str]:
+        """Activate a user"""
+        return activate_user(username)
+    
+    def log_activity(self, username: str, action: str, details: str = None) -> bool:
+        """Log user activity"""
+        return log_activity(username, action, details)
+
+
+# Initialize database on module import
+init_db()
