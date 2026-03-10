@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import logging
 from nanobio_studio.app.services.ml_service import MLService
-from nanobio_studio.app.schemas import (
+from nanobio_studio.app.ml.schemas import (
     MLTaskConfig,
     TaskType,
     DatasetBuildRequest,

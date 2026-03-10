@@ -9,7 +9,7 @@ import pandas as pd
 import logging
 import json
 from nanobio_studio.app.services.ml_service import RankingService
-from nanobio_studio.app.schemas import RankingRequest
+from nanobio_studio.app.ml.schemas import RankingRequest
 from nanobio_studio.app.auth import Permission
 from nanobio_studio.app.ui.streamlit_auth import (
     require_login,
