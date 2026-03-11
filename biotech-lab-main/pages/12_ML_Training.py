@@ -421,7 +421,7 @@ def main():
             
             # Check row count before retrieving
             from sqlalchemy import text
-            result = session.execute(text("SELECT COUNT(*) FROM trained_model"))
+            result = session.execute(text("SELECT COUNT(*) FROM trained_models"))
             row_count = result.scalar()
             logger.info(f"Training table has {row_count} rows")
             
