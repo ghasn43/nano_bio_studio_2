@@ -38,7 +38,7 @@ class JWTHandler:
 
     def __init__(
         self,
-        secret_key: str,
+        secret_key: str = None,
         algorithm: str = "HS256",
         expiration_hours: int = 24,
     ):
@@ -50,6 +50,10 @@ class JWTHandler:
             algorithm: JWT algorithm (default: HS256)
             expiration_hours: Token expiration time in hours
         """
+        # Use default if not provided
+        if secret_key is None:
+            secret_key = "your-secret-key-change-in-production"
+        
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.expiration_hours = expiration_hours
@@ -91,6 +95,10 @@ class JWTHandler:
             "exp": expire,
             "iat": datetime.utcnow(),
         }
+
+        # Ensure secret_key is set before encoding
+        if not self.secret_key:
+            self.secret_key = "your-secret-key-change-in-production"
 
         encoded_jwt = jwt.encode(
             payload,
