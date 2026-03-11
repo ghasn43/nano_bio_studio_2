@@ -262,10 +262,17 @@ def get_db() -> Database:
         
         if not db_url:
             # Create absolute path for SQLite database file
-            # Use the biotech-lab-main directory as base
-            current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Go up 2 levels from nanobio_studio/app/db
-            db_path = os.path.join(current_dir, "ml_module.db")
-            db_url = f"sqlite:///{db_path.replace(chr(92), '/')}"  # Convert backslashes to forward slashes for SQLite
+            # Navigate from nanobio_studio/app/db/database.py to biotech-lab-main
+            db_file = os.path.abspath(__file__)  # Full path to database.py
+            app_dir = os.path.dirname(db_file)  # nanobio_studio/app/db
+            app_dir = os.path.dirname(app_dir)  # nanobio_studio/app
+            nanobio_dir = os.path.dirname(app_dir)  # nanobio_studio
+            root_dir = os.path.dirname(nanobio_dir)  # biotech-lab-main
+            
+            db_path = os.path.join(root_dir, "ml_module.db")
+            
+            # Convert Windows path to SQLite format (forward slashes)
+            db_url = f"sqlite:///{db_path.replace(chr(92), '/')}"
             logger.info(f"Using database at: {db_path}")
         
         logger.info(f"Database URL: {db_url}")
