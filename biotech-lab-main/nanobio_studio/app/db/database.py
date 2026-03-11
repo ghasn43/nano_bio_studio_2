@@ -275,6 +275,14 @@ def _create_db_instance() -> Database:
     return db
 
 
+# Cache the database instance creation at module level
+if HAS_STREAMLIT:
+    @st.cache_resource
+    def _get_cached_db_instance():
+        """Cached database instance creator"""
+        return _create_db_instance()
+
+
 def get_db() -> Database:
     """Get or create global database instance with Streamlit caching for persistence"""
     global _db
@@ -282,11 +290,7 @@ def get_db() -> Database:
     # If Streamlit is available, use caching to persist across reruns
     if HAS_STREAMLIT:
         try:
-            @st.cache_resource
-            def _get_cached_db():
-                return _create_db_instance()
-            
-            return _get_cached_db()
+            return _get_cached_db_instance()
         except Exception as e:
             # Fallback if Streamlit caching fails
             logger.warning(f"Streamlit cache unavailable, using global instance: {e}")
