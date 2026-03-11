@@ -391,48 +391,61 @@ def main():
             from nanobio_studio.app.db.database import get_db, ModelRepository
             import os
             
+            logger.info("="*60)
+            logger.info("HISTORY LOAD: Starting training history load...")
+            
             db = get_db()
-            logger.info(f"Database instance: {db}")
-            logger.info(f"Database engine: {db.engine.url}")
+            logger.info(f"HISTORY LOAD: Database instance ID: {id(db)}")
+            logger.info(f"HISTORY LOAD: Engine ID: {id(db.engine)}")
+            logger.info(f"HISTORY LOAD: Database engine: {db.engine.url}")
             
             # Check if database file exists
             db_url_str = str(db.engine.url)
             if "sqlite" in db_url_str:
                 db_file = db_url_str.replace("sqlite:///", "")
                 cwd = os.getcwd()
-                logger.info(f"Current working directory: {cwd}")
-                logger.info(f"Database file path (relative): {db_file}")
+                logger.info(f"HISTORY LOAD: Current working directory: {cwd}")
+                logger.info(f"HISTORY LOAD: Database file path (relative): {db_file}")
                 
                 # Try absolute path
                 abs_db_path = os.path.abspath(db_file)
-                logger.info(f"Database file path (absolute): {abs_db_path}")
+                logger.info(f"HISTORY LOAD: Database file path (absolute): {abs_db_path}")
                 
                 if os.path.exists(db_file):
                     file_size = os.path.getsize(db_file)
-                    logger.info(f"✅ Database file EXISTS at relative path, size: {file_size} bytes")
+                    logger.info(f"✅ HISTORY LOAD: Database file EXISTS at relative path, size: {file_size} bytes")
                 elif os.path.exists(abs_db_path):
                     file_size = os.path.getsize(abs_db_path)
-                    logger.info(f"✅ Database file EXISTS at absolute path, size: {file_size} bytes")
+                    logger.info(f"✅ HISTORY LOAD: Database file EXISTS at absolute path, size: {file_size} bytes")
                 else:
-                    logger.warning(f"❌ Database file NOT found at: {db_file} or {abs_db_path}")
+                    logger.warning(f"❌ HISTORY LOAD: Database file NOT found at: {db_file} or {abs_db_path}")
                     st.warning("⚠️ Database file not found - training history cannot persist")
             
             session = db.get_session()
+            logger.info(f"HISTORY LOAD: Session created: {id(session)}")
             
             # Check row count before retrieving
             from sqlalchemy import text
             result = session.execute(text("SELECT COUNT(*) FROM trained_models"))
             row_count = result.scalar()
-            logger.info(f"Training table has {row_count} rows")
+            logger.info(f"HISTORY LOAD: Training table has {row_count} rows")
+            
+            if row_count > 0:
+                # List all IDs to debug
+                result = session.execute(text("SELECT id, task_name, created_at FROM trained_models ORDER BY created_at DESC"))
+                for row in result:
+                    logger.info(f"HISTORY LOAD: Record - ID: {row[0]}, Task: {row[1]}, Created: {row[2]}")
             
             model_repo = ModelRepository(session)
             trained_models = model_repo.get_all()
             
-            logger.info(f"Retrieved {len(trained_models)} trained models from database")
+            logger.info(f"HISTORY LOAD: Retrieved {len(trained_models)} trained models from database")
             
             # Important: Detach objects from session before closing
             session.expunge_all()
             session.close()
+            logger.info(f"HISTORY LOAD: Session closed")
+            logger.info("="*60)
             
             if trained_models:
                 st.success(f"Found {len(trained_models)} trained model(s)")
@@ -493,8 +506,10 @@ def main():
                 st.info("No training history yet. Train a model in the **Train Models** tab to get started!")
         
         except Exception as e:
+            logger.error("="*60)
+            logger.error(f"Error loading training history: {str(e)}", exc_info=True)
+            logger.error("="*60)
             st.error(f"Error loading training history: {str(e)}")
-            logger.error(f"Training history error: {e}")
             st.info("Using in-session training history (will be lost on page refresh)")
             
             # Fallback to session state if database fails

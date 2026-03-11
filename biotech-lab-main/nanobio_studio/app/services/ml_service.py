@@ -179,9 +179,15 @@ class MLService:
         
         # Save training record to database for persistence
         try:
+            logger.info("="*60)
+            logger.info("TRAINING SAVE: Starting database save...")
+            
             db = get_db()
-            logger.info(f"Database URL: {db.engine.url}")
+            logger.info(f"TRAINING SAVE: Database URL: {db.engine.url}")
+            logger.info(f"TRAINING SAVE: Engine object ID: {id(db.engine)}")
+            
             session = db.get_session()
+            logger.info(f"TRAINING SAVE: Session created: {id(session)}")
             
             # Get best model metrics
             best_train_metrics = None
@@ -193,8 +199,9 @@ class MLService:
                     break
             
             # Create TrainedModel record
+            model_id = str(uuid.uuid4())
             trained_model = TrainedModel(
-                id=str(uuid.uuid4()),
+                id=model_id,
                 task_name=config.task_name,
                 model_type=str(best_model_type),
                 task_type=str(config.task_type),
@@ -213,18 +220,44 @@ class MLService:
                 },
                 metadata_json={'artifact_name': request.artifact_name},
             )
+            logger.info(f"TRAINING SAVE: Created TrainedModel object (ID: {model_id})")
             
             model_repo = ModelRepository(session)
+            logger.info(f"TRAINING SAVE: ModelRepository created")
+            
             saved_model = model_repo.create(trained_model)
+            logger.info(f"TRAINING SAVE: Model saved and committed via repository")
             
-            # Ensure data is flushed and committed to disk
-            session.flush()
-            db.engine.dispose()  # Dispose connections to ensure file is written
+            # Verify data is in database
+            try:
+                from sqlalchemy import text
+                result = session.execute(text(f"SELECT COUNT(*) FROM trained_models WHERE id = '{model_id}'"))
+                count = result.scalar()
+                logger.info(f"TRAINING SAVE: Verified - Record {model_id} {'EXISTS' if count > 0 else 'NOT FOUND'} in database after save")
+            except Exception as verify_err:
+                logger.warning(f"TRAINING SAVE: Could not verify saved record: {verify_err}")
+            
             session.close()
+            logger.info(f"TRAINING SAVE: Session closed")
             
-            logger.info(f"✅ Saved training record to database: {config.task_name} (ID: {saved_model.id})")
+            # Get fresh session to verify persistence
+            verify_session = db.get_session()
+            try:
+                result = verify_session.execute(text(f"SELECT COUNT(*) FROM trained_models WHERE id = '{model_id}'"))
+                count = result.scalar()
+                logger.info(f"TRAINING SAVE: Final verification - Record {model_id} {'EXISTS' if count > 0 else 'NOT FOUND'} in fresh session")
+            except Exception as verify_err:
+                logger.warning(f"TRAINING SAVE: Could not verify in fresh session: {verify_err}")
+            finally:
+                verify_session.close()
+            
+            logger.info(f"✅ Saved training record to database: {config.task_name} (ID: {model_id})")
+            logger.info("="*60)
+            
         except Exception as e:
+            logger.error("="*60)
             logger.error(f"❌ Could not save training record to database: {e}", exc_info=True)
+            logger.error("="*60)
         
         logger.info(f"Training complete for '{config.task_name}'")
         return response
