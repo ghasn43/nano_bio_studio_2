@@ -110,9 +110,9 @@ class MLService:
         y_train = dataset['y_train'].values
         y_valid = dataset['y_valid'].values
         
-        # Train models
-        is_regression = "regression" in config.task_type.value
-        is_classification = "classify" in config.task_type.value
+        # Train models - determine task type from task_type value
+        is_regression = "predict_" in config.task_type.value
+        is_classification = "classify_" in config.task_type.value
         
         if is_regression:
             results = self.trainer.train_regression_models(
