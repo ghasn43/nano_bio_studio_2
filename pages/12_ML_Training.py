@@ -407,10 +407,13 @@ def main():
         st.header("📚 Training History")
 
         try:
-            from nanobio_studio.app.db.database import DatabaseManager
+            from nanobio_studio.app.db.database import get_db, ModelRepository
             
-            db_manager = DatabaseManager()
-            trained_models = db_manager.model_repo.get_all()
+            db = get_db()
+            session = db.get_session()
+            model_repo = ModelRepository(session)
+            trained_models = model_repo.get_all()
+            session.close()
             
             if trained_models:
                 st.success(f"Found {len(trained_models)} trained model(s)")

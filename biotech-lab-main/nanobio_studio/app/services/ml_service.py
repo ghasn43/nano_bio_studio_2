@@ -24,8 +24,9 @@ from ..ml.schemas import (
     TrainResponse,
     RankingRequest,
 )
-from ..db.database import DatabaseManager
+from ..db.database import get_db
 from ..db.models import TrainedModel
+from ..db.database import ModelRepository
 
 
 logger = logging.getLogger(__name__)
@@ -178,7 +179,8 @@ class MLService:
         
         # Save training record to database for persistence
         try:
-            db_manager = DatabaseManager()
+            db = get_db()
+            session = db.get_session()
             
             # Get best model metrics
             best_train_metrics = None
@@ -211,7 +213,9 @@ class MLService:
                 metadata_json={'artifact_name': request.artifact_name},
             )
             
-            db_manager.model_repo.create(trained_model)
+            model_repo = ModelRepository(session)
+            model_repo.create(trained_model)
+            session.close()
             logger.info(f"Saved training record to database: {config.task_name}")
         except Exception as e:
             logger.warning(f"Could not save training record to database: {e}")
