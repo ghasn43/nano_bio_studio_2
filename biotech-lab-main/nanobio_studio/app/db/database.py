@@ -163,7 +163,25 @@ class ModelRepository:
     
     def get_all(self) -> List[TrainedModel]:
         """Get all models"""
-        return self.session.query(TrainedModel).all()
+        models = self.session.query(TrainedModel).all()
+        
+        # Eagerly load all attributes to prevent lazy loading issues after session closes
+        for model in models:
+            # Access all attributes to force loading
+            _ = (
+                model.id,
+                model.task_name,
+                model.model_type,
+                model.task_type,
+                model.created_at,
+                model.n_training_samples,
+                model.n_features,
+                model.train_score,
+                model.validation_score,
+                model.evaluation_summary,
+            )
+        
+        return models
     
     def delete_by_task(self, task_name: str) -> bool:
         """Delete model by task name"""
@@ -239,7 +257,18 @@ def get_db() -> Database:
     """Get or create global database instance"""
     global _db
     if _db is None:
-        db_url = os.getenv("DATABASE_URL", "sqlite:///ml_module.db")
+        # Get database URL from environment or use absolute path default
+        db_url = os.getenv("DATABASE_URL")
+        
+        if not db_url:
+            # Create absolute path for SQLite database file
+            # Use the biotech-lab-main directory as base
+            current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Go up 2 levels from nanobio_studio/app/db
+            db_path = os.path.join(current_dir, "ml_module.db")
+            db_url = f"sqlite:///{db_path.replace(chr(92), '/')}"  # Convert backslashes to forward slashes for SQLite
+            logger.info(f"Using database at: {db_path}")
+        
+        logger.info(f"Database URL: {db_url}")
         _db = Database(db_url)
         _db.init_db()
     return _db

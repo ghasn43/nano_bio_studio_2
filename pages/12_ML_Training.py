@@ -408,10 +408,22 @@ def main():
 
         try:
             from nanobio_studio.app.db.database import get_db, ModelRepository
+            import os
             
             db = get_db()
             logger.info(f"Database instance: {db}")
             logger.info(f"Database engine: {db.engine.url}")
+            
+            # Check if database file exists
+            db_url_str = str(db.engine.url)
+            if "sqlite" in db_url_str:
+                db_file = db_url_str.replace("sqlite:///", "")
+                logger.info(f"Database file path: {db_file}")
+                if os.path.exists(db_file):
+                    file_size = os.path.getsize(db_file)
+                    logger.info(f"Database file exists, size: {file_size} bytes")
+                else:
+                    logger.warning(f"Database file does NOT exist at: {db_file}")
             
             session = db.get_session()
             model_repo = ModelRepository(session)
@@ -419,6 +431,8 @@ def main():
             
             logger.info(f"Retrieved {len(trained_models)} trained models from database")
             
+            # Important: Detach objects from session before closing
+            session.expunge_all()
             session.close()
             
             if trained_models:
