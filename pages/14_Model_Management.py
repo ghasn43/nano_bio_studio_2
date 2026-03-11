@@ -4,6 +4,12 @@ Model Management & Monitoring Page
 Page for viewing, managing, and monitoring trained ML models.
 """
 
+import sys
+from pathlib import Path
+
+# Add biotech-lab-main to sys.path for imports from nanobio_studio
+sys.path.insert(0, str(Path(__file__).parent.parent / "biotech-lab-main"))
+
 import streamlit as st
 import pandas as pd
 import logging

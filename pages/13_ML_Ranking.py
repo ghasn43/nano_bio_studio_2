@@ -4,6 +4,12 @@ ML Ranking & Candidate Evaluation Page
 Interactive page for ranking formulations against multiple criteria.
 """
 
+import sys
+from pathlib import Path
+
+# Add biotech-lab-main to sys.path for imports from nanobio_studio
+sys.path.insert(0, str(Path(__file__).parent.parent / "biotech-lab-main"))
+
 import streamlit as st
 import pandas as pd
 import logging
