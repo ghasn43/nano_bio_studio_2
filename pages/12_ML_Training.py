@@ -410,9 +410,15 @@ def main():
             from nanobio_studio.app.db.database import get_db, ModelRepository
             
             db = get_db()
+            logger.info(f"Database instance: {db}")
+            logger.info(f"Database engine: {db.engine.url}")
+            
             session = db.get_session()
             model_repo = ModelRepository(session)
             trained_models = model_repo.get_all()
+            
+            logger.info(f"Retrieved {len(trained_models)} trained models from database")
+            
             session.close()
             
             if trained_models:

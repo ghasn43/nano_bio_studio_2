@@ -8,7 +8,7 @@ import logging
 from typing import List, Optional, Type, TypeVar
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.pool import StaticPool
+from sqlalchemy.pool import StaticPool, NullPool
 import os
 
 from .models import Base, Formulation, Assay, TrainedModel, ModelPrediction, RankingResult, Artifact
@@ -27,17 +27,28 @@ class Database:
         Initialize database.
         
         Args:
-            db_url: Database URL (defaults to SQLite in-memory)
+            db_url: Database URL (defaults to file-based SQLite)
         """
         if db_url is None:
-            # In-memory SQLite for development
-            db_url = "sqlite:///:memory:"
+            # File-based SQLite for persistence
+            db_url = "sqlite:///ml_module.db"
         
-        self.engine = create_engine(
-            db_url,
-            connect_args={"check_same_thread": False} if "sqlite" in db_url else {},
-            poolclass=StaticPool if "sqlite" in db_url else None,
-        )
+        # Configure engine based on database type
+        is_sqlite = "sqlite" in db_url
+        is_memory = "memory" in db_url
+        
+        engine_kwargs = {
+            "connect_args": {"check_same_thread": False} if is_sqlite else {},
+        }
+        
+        # Only use StaticPool for in-memory databases
+        if is_sqlite and is_memory:
+            engine_kwargs["poolclass"] = StaticPool
+        elif is_sqlite:
+            # For file-based SQLite, use NullPool to avoid connection pooling issues
+            engine_kwargs["poolclass"] = NullPool
+        
+        self.engine = create_engine(db_url, **engine_kwargs)
         
         self.SessionLocal = sessionmaker(
             autocommit=False,

@@ -180,6 +180,7 @@ class MLService:
         # Save training record to database for persistence
         try:
             db = get_db()
+            logger.info(f"Database URL: {db.engine.url}")
             session = db.get_session()
             
             # Get best model metrics
@@ -214,11 +215,11 @@ class MLService:
             )
             
             model_repo = ModelRepository(session)
-            model_repo.create(trained_model)
+            saved_model = model_repo.create(trained_model)
             session.close()
-            logger.info(f"Saved training record to database: {config.task_name}")
+            logger.info(f"✅ Saved training record to database: {config.task_name} (ID: {saved_model.id})")
         except Exception as e:
-            logger.warning(f"Could not save training record to database: {e}")
+            logger.error(f"❌ Could not save training record to database: {e}", exc_info=True)
         
         logger.info(f"Training complete for '{config.task_name}'")
         return response
