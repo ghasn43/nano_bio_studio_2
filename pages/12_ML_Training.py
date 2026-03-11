@@ -183,16 +183,25 @@ def main():
 
             with col1:
                 if use_profile:
+                    # Convert columns to list to avoid pandas Index issues
+                    columns_list = list(df.columns)
+                    target_idx = 0
+                    try:
+                        if "profile_target" in st.session_state and st.session_state.profile_target in columns_list:
+                            target_idx = columns_list.index(st.session_state.profile_target)
+                    except (ValueError, KeyError):
+                        target_idx = 0
+                    
                     target_variable = st.selectbox(
                         "Target Variable",
-                        options=df.columns,
-                        index=df.columns.tolist().index(st.session_state.profile_target) if st.session_state.profile_target in df.columns else 0,
+                        options=columns_list,
+                        index=target_idx,
                         help="Column to predict (auto-set from profile)",
                     )
                 else:
                     target_variable = st.selectbox(
                         "Target Variable",
-                        options=df.columns,
+                        options=list(df.columns),
                         help="Column to predict",
                     )
 

@@ -194,24 +194,28 @@ def apply_profile(
     if not profile:
         raise ValueError(f"Unknown profile: {profile_name}")
 
+    # Ensure df.columns is a list for reliable membership testing
+    available_columns = list(df.columns)
+
     # Determine target variable
     target_var = custom_target or profile.default_target_variable
-    if target_var not in df.columns:
+    if target_var not in available_columns:
         # Try recommended alternatives
         for alt_target in profile.recommended_target_variables:
-            if alt_target in df.columns:
+            if alt_target in available_columns:
                 target_var = alt_target
                 break
         else:
             raise ValueError(
                 f"Target variable '{profile.default_target_variable}' not found. "
-                f"Available columns: {list(df.columns)}"
+                f"Available columns: {available_columns}"
             )
 
-    # Filter excludes to only existing columns
-    valid_excludes = [col for col in profile.exclude_features if col in df.columns]
+    # Filter excludes to only existing columns (using list to avoid boolean series issues)
+    valid_excludes = [col for col in profile.exclude_features if col in available_columns]
 
-    # Create config
+    # Create config with fresh exclude features list
     config = profile.to_config(target_variable=target_var)
+    config.exclude_features = valid_excludes
 
     return config, valid_excludes, target_var
