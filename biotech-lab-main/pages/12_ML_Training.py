@@ -161,6 +161,7 @@ def main():
                         # Store in session state
                         st.session_state.dataset = dataset
                         st.session_state.dataset_config = config
+                        st.session_state.raw_dataframe = df  # Store original dataframe for training
 
                 except Exception as e:
                     st.error(f"Error: {str(e)}")
@@ -178,6 +179,7 @@ def main():
         # Use the dataset from session_state
         dataset = st.session_state.dataset
         dataset_config = st.session_state.dataset_config
+        raw_dataframe = st.session_state.raw_dataframe  # Get original dataframe for training
         
         st.success(f"✅ Using dataset: **{dataset_config.task_name}**")
         st.info(f"📊 Data: {dataset['n_samples']} samples, {dataset['n_features']} features | Train: {len(dataset['X_train'])}, Validation: {len(dataset['X_valid'])}")
@@ -244,7 +246,7 @@ def main():
                         )
 
                         # Use the built dataset from session_state
-                        response = ml_service.train_models(dataset, request)
+                        response = ml_service.train_models(raw_dataframe, request)
 
                         st.success("✅ Training complete!")
 
