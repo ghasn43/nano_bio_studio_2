@@ -8,7 +8,19 @@ import os
 import logging
 from typing import List, Optional
 from enum import Enum
-from pydantic_settings import BaseSettings
+
+# Try new pydantic v2 structure first, fallback to v1
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:
+    try:
+        from pydantic import BaseSettings  # pydantic v1 fallback
+    except ImportError:
+        # Minimal fallback if pydantic not available
+        class BaseSettings:
+            class Config:
+                env_file = ".env"
+                case_sensitive = False
 
 
 class Environment(str, Enum):

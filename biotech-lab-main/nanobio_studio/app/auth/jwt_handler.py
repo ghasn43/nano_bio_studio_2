@@ -7,8 +7,18 @@ Manages JWT token creation, validation, and user claims.
 import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict
-import jwt
-from pydantic import BaseModel
+
+try:
+    import jwt
+except ImportError:
+    jwt = None
+
+try:
+    from pydantic import BaseModel
+except ImportError:
+    # Minimal fallback
+    class BaseModel:
+        pass
 
 
 logger = logging.getLogger(__name__)

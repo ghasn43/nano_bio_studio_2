@@ -7,3 +7,6 @@ plotly>=5.18.0
 optuna>=3.6.0
 sqlalchemy>=2.0.0
 bcrypt>=4.0.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+PyJWT>=2.8.0
