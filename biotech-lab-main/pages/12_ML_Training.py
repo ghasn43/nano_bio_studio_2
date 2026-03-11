@@ -87,8 +87,17 @@ def main():
             with col2:
                 task_type = st.selectbox(
                     "Task Type",
-                    options=["regression", "classification"],
-                    help="Type of ML task",
+                    options=[
+                        "predict_particle_size",
+                        "predict_pdi",
+                        "predict_toxicity",
+                        "predict_uptake",
+                        "predict_transfection",
+                        "classify_toxicity_band",
+                        "classify_uptake_band",
+                        "classify_qc_pass",
+                    ],
+                    help="Select the specific ML prediction task",
                 )
 
             col1, col2 = st.columns(2)
