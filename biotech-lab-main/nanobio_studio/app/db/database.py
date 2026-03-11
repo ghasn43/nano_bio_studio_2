@@ -257,23 +257,14 @@ def get_db() -> Database:
     """Get or create global database instance"""
     global _db
     if _db is None:
-        # Get database URL from environment or use absolute path default
+        # Get database URL from environment or use file-based default
         db_url = os.getenv("DATABASE_URL")
         
         if not db_url:
-            # Create absolute path for SQLite database file
-            # Navigate from nanobio_studio/app/db/database.py to biotech-lab-main
-            db_file = os.path.abspath(__file__)  # Full path to database.py
-            app_dir = os.path.dirname(db_file)  # nanobio_studio/app/db
-            app_dir = os.path.dirname(app_dir)  # nanobio_studio/app
-            nanobio_dir = os.path.dirname(app_dir)  # nanobio_studio
-            root_dir = os.path.dirname(nanobio_dir)  # biotech-lab-main
-            
-            db_path = os.path.join(root_dir, "ml_module.db")
-            
-            # Convert Windows path to SQLite format (forward slashes)
-            db_url = f"sqlite:///{db_path.replace(chr(92), '/')}"
-            logger.info(f"Using database at: {db_path}")
+            # Use file-based SQLite in the current working directory
+            # Streamlit runs from the app root (biotech-lab-main)
+            db_url = "sqlite:///ml_module.db"  # Relative path - creates in current working dir
+            logger.info(f"Using relative database path: ml_module.db")
         
         logger.info(f"Database URL: {db_url}")
         _db = Database(db_url)
