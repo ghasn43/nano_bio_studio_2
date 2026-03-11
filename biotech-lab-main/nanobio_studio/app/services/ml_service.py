@@ -178,6 +178,10 @@ class MLService:
         )
         
         # Save training record to database for persistence
+        logger.info("="*60)
+        logger.info("TRAINING SAVE: ABOUT TO TRY DATABASE SAVE...")
+        logger.info("="*60)
+        
         try:
             logger.info("="*60)
             logger.info("TRAINING SAVE: Starting database save...")
