@@ -21,7 +21,7 @@ from auth import (
     change_password, reset_password, get_user_info, count_admin_users,
     setup_admin_account, deactivate_user, activate_user, list_users_detailed,
     log_activity, update_last_activity, is_session_expired, get_activity_log, 
-    SESSION_TIMEOUT_MINUTES
+    SESSION_TIMEOUT_MINUTES, get_session_info, get_most_recent_active_session
 )
 from rbac import (
     get_user_role, has_permission, can_access_tab, 
@@ -29,7 +29,6 @@ from rbac import (
     Permission, Role, ROLE_TAB_ACCESS, require_permission
 )
 from ui.styling import apply_css_profile
-from tabs import design as design_tab
 
 # ============================================================
 # SESSION PERSISTENCE - Keep user logged in across page refreshes
@@ -47,9 +46,64 @@ def initialize_session_state():
         st.session_state.role = None
     if "current_tab" not in st.session_state:
         st.session_state.current_tab = "🏠 Home"
+    if "session_checked" not in st.session_state:
+        st.session_state.session_checked = False
 
 # Initialize session state at app startup
 initialize_session_state()
+
+# ============================================================
+# PERSISTENT SESSION RECOVERY - Load active session from database
+# ============================================================
+def restore_active_session():
+    """
+    Try to restore an active session from the database on page refresh.
+    This ensures users stay logged in even if browser session storage is cleared.
+    """
+    # Only check once per session
+    if st.session_state.session_checked:
+        return
+    
+    st.session_state.session_checked = True
+    
+    # First, check if user claims to be logged in
+    if st.session_state.logged_in and st.session_state.username:
+        try:
+            # Verify the session is still active in the database
+            session_info = get_session_info(st.session_state.username)
+            if session_info:
+                # Session is valid, update activity and keep user logged in
+                try:
+                    update_last_activity(st.session_state.username)
+                except:
+                    pass
+                return
+        except Exception:
+            pass
+    
+    # If not logged in, try to recover the most recent active session
+    # This handles cases where session_state was cleared but user had an active session
+    if not st.session_state.logged_in:
+        try:
+            recent_session = get_most_recent_active_session()
+            if recent_session:
+                # Restore the session automatically
+                st.session_state.logged_in = True
+                st.session_state.username = recent_session["username"]
+                st.session_state.role = recent_session["role"]
+                
+                # Update activity timestamp
+                try:
+                    update_last_activity(recent_session["username"])
+                except:
+                    pass
+                
+                return
+        except Exception:
+            pass
+
+# Restore session on every page load
+restore_active_session()
 
 # ============================================================
 # ⚠️ IMPORTANT DISCLAIMER
@@ -2025,6 +2079,9 @@ elif mode == "🎨 Design":
         st.error("❌ Access Denied: You do not have permission to access the Design module.")
         st.info(f"📋 Your role ({get_user_role()}) does not have access to this feature. Please contact an administrator.")
         st.stop()
+    
+    # Import design tab module (lazy import to avoid import errors for unused features)
+    from tabs import design as design_tab
     
     # Load design tab from modular tabs.design module
     design_tab.render(PLOTLY_AVAILABLE)

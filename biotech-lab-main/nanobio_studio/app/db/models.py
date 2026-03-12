@@ -60,7 +60,7 @@ class TrainedModel(Base):
     __tablename__ = "trained_models"
     
     id = Column(String(36), primary_key=True)
-    task_name = Column(String(255), nullable=False, unique=True)
+    task_name = Column(String(255), nullable=False)  # Removed unique=True to allow multiple trainings per task
     model_type = Column(String(100), nullable=False)
     task_type = Column(String(50), nullable=False)
     target_variable = Column(String(100), nullable=False)

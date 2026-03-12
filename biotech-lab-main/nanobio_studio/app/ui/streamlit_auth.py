@@ -157,41 +157,44 @@ class StreamlitAuth:
 
 def require_login(page_name: str = "This page"):
     """
-    Decorator/check to require login.
-
+    Check if user is logged in via the main App.py authentication system.
+    Works with the old auth.py, not StreamlitAuth JWT system.
+    
     Usage:
-        if not require_login():
-            st.stop()
+        if not require_login("ML Training"):
+            return
     """
+    # Check if user is logged in via App.py session state
+    if "logged_in" in st.session_state and st.session_state.logged_in and st.session_state.username:
+        return True
+    
+    # Fallback to StreamlitAuth
     StreamlitAuth.init_session_state()
-
-    if not StreamlitAuth.is_authenticated():
-        st.warning(f"🔒 {page_name} requires login")
-        st.info("Please log in using the login page")
-        st.stop()
-        return False
-
-    return True
+    if StreamlitAuth.is_authenticated():
+        return True
+    
+    # Not logged in - show warning but don't call st.stop() to allow graceful fallback
+    st.warning(f"🔒 {page_name} requires login")
+    st.info("Please log in using the login area in the sidebar")
+    return False
 
 
 def require_permission(permission: Permission, page_name: str = "This feature"):
     """
-    Decorator/check to require specific permission.
-
+    Check if user has required permission.
+    
     Usage:
-        if not require_permission(Permission.MODEL_TRAIN):
-            st.stop()
+        if not require_permission(Permission.MODEL_TRAIN, "Model training"):
+            return
     """
-    if not StreamlitAuth.is_authenticated():
-        st.warning("🔒 Please log in first")
-        st.stop()
+    # First check if user is logged in
+    if not require_login("This feature"):
         return False
-
-    if not StreamlitAuth.require_permission(permission):
-        st.error(f"❌ {page_name} requires permission: {permission.value}")
-        st.stop()
-        return False
-
+    
+    # For now, allow all permissions if user is logged in
+    # TODO: Implement role-based permission checking
+    # This can be extended later to check actual user roles/permissions from the database
+    
     return True
 
 

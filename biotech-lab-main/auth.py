@@ -258,6 +258,53 @@ def get_session_info(username: str) -> Optional[Dict]:
         return None
 
 
+def get_most_recent_active_session() -> Optional[Dict]:
+    """
+    Get the most recently active user session from the database.
+    Used for session recovery on app refresh.
+    
+    Returns:
+        Dict with username and role, or None if no active sessions
+    """
+    try:
+        conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+        cur = conn.cursor()
+        
+        # Get the most recently active user
+        cur.execute(
+            "SELECT username, role, last_activity FROM users WHERE is_active = 1 ORDER BY last_activity DESC LIMIT 1"
+        )
+        row = cur.fetchone()
+        conn.close()
+        
+        if not row:
+            return None
+        
+        username, role, last_activity = row
+        
+        # Check if this session is still within the timeout window
+        if last_activity:
+            try:
+                last_activity_time = datetime.strptime(last_activity, "%Y-%m-%d %H:%M:%S")
+                now = datetime.now()
+                inactive_duration = now - last_activity_time
+                timeout_duration = timedelta(minutes=SESSION_TIMEOUT_MINUTES)
+                
+                # If session is not expired, return it
+                if inactive_duration <= timeout_duration:
+                    return {
+                        "username": username,
+                        "role": role,
+                        "last_activity": last_activity
+                    }
+            except Exception:
+                pass
+        
+        return None
+    except Exception:
+        return None
+
+
 def is_session_expired(username: str, timeout_minutes: int = None) -> Tuple[bool, str]:
     """
     Check if a user's session has expired due to inactivity.

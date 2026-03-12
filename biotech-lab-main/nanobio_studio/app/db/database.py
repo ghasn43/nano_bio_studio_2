@@ -179,12 +179,17 @@ class ModelRepository:
                 model.task_name,
                 model.model_type,
                 model.task_type,
+                model.target_variable,
                 model.created_at,
                 model.n_training_samples,
                 model.n_features,
                 model.train_score,
                 model.validation_score,
                 model.evaluation_summary,
+                model.model_path,
+                model.preprocessing_path,
+                model.task_config,
+                model.metadata_json,
             )
         
         return models
