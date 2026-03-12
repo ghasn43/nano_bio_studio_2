@@ -4,12 +4,6 @@ Login Page
 User authentication interface for the NanoBio Studio.
 """
 
-import sys
-from pathlib import Path
-
-# Add biotech-lab-main to sys.path for imports from nanobio_studio
-sys.path.insert(0, str(Path(__file__).parent.parent / "biotech-lab-main"))
-
 import streamlit as st
 import logging
 from datetime import datetime

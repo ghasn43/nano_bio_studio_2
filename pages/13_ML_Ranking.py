@@ -4,12 +4,6 @@ ML Ranking & Candidate Evaluation Page
 Interactive page for ranking formulations against multiple criteria.
 """
 
-import sys
-from pathlib import Path
-
-# Add biotech-lab-main to sys.path for imports from nanobio_studio
-sys.path.insert(0, str(Path(__file__).parent.parent / "biotech-lab-main"))
-
 import streamlit as st
 import pandas as pd
 import logging
@@ -64,21 +58,7 @@ def main():
         )
 
         if uploaded_file:
-            # Load candidate data with encoding error handling
-            try:
-                # Try UTF-8 first
-                candidates_df = pd.read_csv(uploaded_file, encoding='utf-8')
-            except UnicodeDecodeError:
-                try:
-                    # Try Latin-1 encoding
-                    candidates_df = pd.read_csv(uploaded_file, encoding='latin-1')
-                except UnicodeDecodeError:
-                    try:
-                        # Try ISO-8859-1
-                        candidates_df = pd.read_csv(uploaded_file, encoding='iso-8859-1')
-                    except UnicodeDecodeError:
-                        # Last resort: ignore encoding errors
-                        candidates_df = pd.read_csv(uploaded_file, encoding='utf-8', errors='ignore')
+            candidates_df = pd.read_csv(uploaded_file)
 
             st.subheader("Candidates Preview")
             st.dataframe(candidates_df, use_container_width=True)

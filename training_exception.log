@@ -1,0 +1,2518 @@
+
+================================================================================
+Exception at: 2026-03-11 15:10:55.227909
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e3a346cf-ad6e-4a13-803b-bc2cc1d0d930', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 15:10:48.991260', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_191038.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e3a346cf-ad6e-4a13-803b-bc2cc1d0d930', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 15:10:48.991260', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_191038.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-11 17:07:10.758382
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('0c3887df-e615-4917-861e-33d41440599a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:07:10.709759', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_210710.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('0c3887df-e615-4917-861e-33d41440599a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:07:10.709759', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_210710.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-11 17:10:22.144214
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('67868a5a-a1ea-4725-bf36-ac5ade6a9e01', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:10:22.112172', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_211022.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('67868a5a-a1ea-4725-bf36-ac5ade6a9e01', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:10:22.112172', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_211022.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-11 17:27:20.922767
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('d0a4472d-10ed-408b-a43f-e95eec34c46a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:27:20.859784', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_212720.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\ghasn\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('d0a4472d-10ed-408b-a43f-e95eec34c46a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-11 17:27:20.859784', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260311_212720.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:10:36.575349
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ba65855e-4e9a-447a-937e-cccfe4cb762a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:10:34.834320', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071034.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ba65855e-4e9a-447a-937e-cccfe4cb762a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:10:34.834320', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071034.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:11:10.063582
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('cdac76f1-005a-4820-854b-f81ac3c1170c', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:11:09.955641', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071109.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('cdac76f1-005a-4820-854b-f81ac3c1170c', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:11:09.955641', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071109.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:11:26.240009
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('8bc4b1e0-c461-4b84-a9ba-4507009898ba', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:11:26.131410', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071125.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('8bc4b1e0-c461-4b84-a9ba-4507009898ba', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:11:26.131410', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071125.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:12:19.339079
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('a85ed5d7-c17e-4da8-87e6-01ee93a81cbc', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:19.228049', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071219.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('a85ed5d7-c17e-4da8-87e6-01ee93a81cbc', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:19.228049', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071219.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:12:34.403681
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('36379e74-56e4-4666-96ca-75755a63bda6', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:34.280163', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071234.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('36379e74-56e4-4666-96ca-75755a63bda6', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:34.280163', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071234.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:12:38.510036
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('86ca8f5e-cd04-40f2-8629-54d062842f70', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:38.348990', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071238.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('86ca8f5e-cd04-40f2-8629-54d062842f70', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:12:38.348990', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_071238.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:22:03.686391
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e59f9afd-7458-46e8-95dc-8a344c21d51e', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:22:03.642701', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072203.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e59f9afd-7458-46e8-95dc-8a344c21d51e', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:22:03.642701', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072203.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:22:41.363694
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ddc79d7c-e485-47f1-94d2-ce18c86bcc61', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:22:41.319628', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072241.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ddc79d7c-e485-47f1-94d2-ce18c86bcc61', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:22:41.319628', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072241.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:29:23.948141
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ebd67d31-2f6b-479b-b304-4eeecdd7c37a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:29:23.905744', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072923.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ebd67d31-2f6b-479b-b304-4eeecdd7c37a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:29:23.905744', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_072923.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:41:36.191798
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('68d6a657-557d-43d1-bebb-94fe35df9bd6', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:41:36.145585', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_074136.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('68d6a657-557d-43d1-bebb-94fe35df9bd6', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:41:36.145585', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_074136.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 03:52:01.416369
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('7a6e564a-6bbf-4755-8405-7475e43f526a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:52:01.369525', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_075201.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('7a6e564a-6bbf-4755-8405-7475e43f526a', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 03:52:01.369525', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_075201.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 04:15:35.898975
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('573645fe-01ec-47b2-990e-5d375d6c1381', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:15:35.864657', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_081535.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('573645fe-01ec-47b2-990e-5d375d6c1381', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:15:35.864657', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_081535.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 04:24:59.199280
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ebc5f726-d075-470c-90e6-043fcadf2f06', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:24:59.170478', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_082459.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ebc5f726-d075-470c-90e6-043fcadf2f06', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:24:59.170478', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_082459.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 04:44:22.393654
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('a0083b95-7106-42da-ba0c-a28f8fd5821c', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:44:22.347017', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_084422.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('a0083b95-7106-42da-ba0c-a28f8fd5821c', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:44:22.347017', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_084422.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 04:45:36.473283
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e7b22c34-feda-4376-a963-22a16285bf79', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:45:36.434928', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_084536.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('e7b22c34-feda-4376-a963-22a16285bf79', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 04:45:36.434928', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_084536.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================
+
+================================================================================
+Exception at: 2026-03-12 05:31:43.782470
+Task: toxicity_prediction
+Error: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ad7b82f8-71e9-412e-b50f-8179ab375d70', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 05:31:43.664905', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_093143.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: trained_models.task_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\services\ml_service.py", line 278, in train_models
+    saved_model = model_repo.create(trained_model)
+  File "D:\nano_bio_studio_last\biotech-lab-main\nanobio_studio\app\db\database.py", line 160, in create
+    self.session.commit()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\nano_bio_studio_last\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: trained_models.task_name
+[SQL: INSERT INTO trained_models (id, task_name, model_type, task_type, target_variable, created_at, n_training_samples, n_features, train_score, validation_score, model_path, preprocessing_path, task_config, evaluation_summary, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ad7b82f8-71e9-412e-b50f-8179ab375d70', 'toxicity_prediction', 'linear_regression', 'TaskType.PREDICT_TOXICITY', 'Toxicity_%', '2026-03-12 05:31:43.664905', 202, 14, 0.9859190792470528, 0.9842363480834206, 'models_store\\toxicity_prediction_20260312_093143.pkl', None, '{"task_name": "toxicity_prediction", "task_type": "predict_toxicity", "target_variable": "Toxicity_%", "model_types": ["linear_regression", "random_f ... (29 characters truncated) ... random_state": 42, "filter_assay_type": null, "filter_payload_type": null, "filter_target": null, "exclude_features": ["Batch_ID", "Sterility_Pass"]}', '{"train": {"mae": 0.9407740014590651, "rmse": 1.2461920086608842, "r2": 0.9859190792470528, "accuracy": null, "precision": null, "recall": null, "f1" ... (55 characters truncated) ... 61870587447, "rmse": 1.2965034696417346, "r2": 0.9842363480834206, "accuracy": null, "precision": null, "recall": null, "f1": null, "roc_auc": null}}', '{"artifact_name": "toxicity_prediction"}')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+================================================================================

@@ -1,0 +1,303 @@
+2026-03-11 19:10:11,072 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 19:10:11,072 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 19:10:26,195 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:26,195 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:26,212 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:26,212 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:26,404 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 19:10:26,404 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 19:10:42,129 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:42,129 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:42,966 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:42,966 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:52,495 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 19:10:52,495 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 19:10:55,226 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 19:10:55,226 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 19:10:55,248 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:55,248 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:56,427 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 19:10:56,427 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:06:57,569 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:07:10,527 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:07:10,537 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:07:10,553 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:07:10,669 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:07:10,674 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:07:10,726 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:07:10,758 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:07:10,857 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:07:10,866 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:09:49,430 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:10:21,947 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:10:21,962 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:10:21,981 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:10:22,078 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:10:22,081 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:10:22,125 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:10:22,143 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:10:22,147 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:10:22,155 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:06,261 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:27:06,261 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:27:20,611 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,611 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,625 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,625 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,648 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:27:20,648 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-11 21:27:20,792 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,792 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,798 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,798 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,885 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:27:20,885 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:27:20,922 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:27:20,922 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-11 21:27:20,925 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:20,925 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:21,006 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-11 21:27:21,006 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:11,282 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:10:33,437 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:33,502 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:33,628 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:10:34,438 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:34,471 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:35,021 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:10:36,573 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:10:36,638 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:10:36,663 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:03,103 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:11:09,520 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:09,530 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:09,565 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:11:09,828 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:09,842 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:10,000 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:11:10,062 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:11:10,081 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:10,139 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:25,647 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:25,664 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:25,721 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:11:25,993 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:26,011 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:26,180 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:11:26,238 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:11:26,255 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:11:26,282 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:06,045 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:12:18,815 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:18,825 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:18,859 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:12:19,089 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:19,106 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:19,277 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:19,337 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:19,352 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:19,381 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:33,959 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:33,967 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:34,007 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:12:34,170 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:34,181 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:34,334 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:34,402 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:34,424 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:34,453 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:37,997 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:38,007 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:38,038 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:12:38,247 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:38,254 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:38,428 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:38,507 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:12:38,548 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:12:38,595 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:21:55,278 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:22:03,445 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:03,454 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:03,483 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:22:03,603 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:03,606 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:03,660 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:22:03,685 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:22:03,695 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:04,844 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:30,827 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:22:41,113 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:41,122 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:41,150 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:22:41,280 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:41,283 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:41,341 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:22:41,363 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:22:41,368 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:22:41,377 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:09,526 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:29:23,740 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:23,752 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:23,768 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:29:23,876 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:23,879 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:23,926 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:29:23,947 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:29:23,952 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:29:23,963 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:26,882 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:41:26,882 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:41:35,957 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:35,957 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:35,965 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:35,965 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:35,987 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:41:35,987 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:41:36,099 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,099 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,103 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,103 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,164 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:41:36,164 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:41:36,191 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:41:36,191 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:41:36,196 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,196 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,206 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:41:36,206 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:51:47,428 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:51:47,428 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:52:01,169 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,169 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,178 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,178 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,199 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:52:01,199 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 07:52:01,322 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,322 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,326 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,326 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,388 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:52:01,388 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:52:01,415 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:52:01,415 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 07:52:01,420 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,420 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,428 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 07:52:01,428 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:28,718 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:15:35,629 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:35,636 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:35,647 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:15:35,833 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:35,836 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:35,879 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:15:35,898 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:15:35,904 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:15:35,909 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:34,427 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:24:59,036 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:59,043 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:59,052 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:24:59,142 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:59,144 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:59,180 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:24:59,198 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:24:59,203 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:24:59,209 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:16,236 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:44:16,236 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:44:21,986 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:21,986 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:21,995 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:21,995 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,018 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:44:22,018 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:44:22,270 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,270 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,276 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,276 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,365 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:44:22,365 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:44:22,393 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:44:22,393 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:44:22,397 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,397 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,409 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:44:22,409 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:28,632 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:45:28,632 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:45:36,258 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,258 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,266 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,266 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,285 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:45:36,285 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 08:45:36,390 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,390 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,393 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,393 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,452 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:45:36,452 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:45:36,472 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:45:36,472 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 08:45:36,477 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,477 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,487 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 08:45:36,487 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:36,570 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:31:36,570 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:31:43,455 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,455 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,463 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,463 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,488 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:31:43,488 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:31:43,612 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,612 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,617 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,617 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,689 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 09:31:43,689 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 09:31:43,782 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 09:31:43,782 - nanobio_studio.app.services.ml_service - ERROR - ================================================================================
+2026-03-12 09:31:43,786 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,786 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,798 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:31:43,798 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:17,554 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:41:39,426 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,436 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,459 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:41:39,710 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,713 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,937 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,937 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:41:39,944 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:55:52,036 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:55:52,036 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:56:02,124 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,124 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,143 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,143 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,173 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:56:02,173 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 09:56:02,455 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,455 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,459 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,459 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,712 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,712 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,712 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,712 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,725 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 09:56:02,725 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:07:59,255 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 10:09:07,993 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:08,003 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:08,027 - nanobio_studio.app.services.ml_service - INFO - Built dataset for task 'toxicity_prediction'
+2026-03-12 10:09:09,679 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:09,681 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:09,887 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:09,888 - nanobio_studio.app.services.ml_service - INFO - ================================================================================
+2026-03-12 10:09:09,897 - nanobio_studio.app.services.ml_service - INFO - ================================================================================

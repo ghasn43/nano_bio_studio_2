@@ -12,12 +12,6 @@
 #   nanobio_studio/ai_engine/audit.py
 # - Optimizer must accept `constraints=` and log trial user_attrs (eff/tox/cost/rejected...)
 
-import sys
-from pathlib import Path
-
-# Add biotech-lab-main to sys.path for imports from nanobio_studio
-sys.path.insert(0, str(Path(__file__).parent.parent / "biotech-lab-main"))
-
 import random
 import pandas as pd
 import streamlit as st
