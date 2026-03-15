@@ -15,7 +15,7 @@ import json
 import random
 import base64
 
-from .auth import (
+from auth import (
     authenticate, get_all_users, update_user_role, get_user_role as auth_get_user_role,
     register_user, validate_username, validate_password, validate_email,
     change_password, reset_password, get_user_info, count_admin_users,
@@ -23,7 +23,7 @@ from .auth import (
     log_activity, update_last_activity, is_session_expired, get_activity_log, 
     SESSION_TIMEOUT_MINUTES, get_session_info, get_most_recent_active_session
 )
-from .rbac import (
+from rbac import (
     get_user_role, has_permission, can_access_tab, 
     get_available_tabs, show_role_badge, show_role_info,
     Permission, Role, ROLE_TAB_ACCESS, require_permission
