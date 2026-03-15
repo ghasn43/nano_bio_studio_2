@@ -155,13 +155,13 @@ class LiveDataOrchestrator:
                 
                 if connector.source_type == "LIVE API":
                     self.live_sources += 1
-                    print(f"✅ LIVE ({connector.record_count} records)")
+                    print(f"[OK] LIVE ({connector.record_count} records)")
                 else:
                     self.template_sources += 1
-                    print(f"✅ TEMPLATE ({connector.record_count} records)")
+                    print(f"[OK] TEMPLATE ({connector.record_count} records)")
             else:
                 results[source_name] = False
-                print(f"❌ FAILED")
+                print(f"[FAILED]")
         
         return results
     
