@@ -4,15 +4,22 @@ Comprehensive guide to finding training data for toxicity prediction models
 """
 
 import streamlit as st
+from components.branding import (
+    render_brand_header, render_brand_footer, render_sidebar_branding,
+    render_page_title_with_branding, render_research_disclaimer
+)
 
 st.set_page_config(
-    page_title="Data Sources",
+    page_title="Data Sources - NanoBio Studio™",
     page_icon="📚",
     layout="wide",
 )
 
-st.title("📚 Data Sources & Resources")
-st.markdown("Comprehensive guide to finding training data for toxicity prediction and nanoparticle research")
+# Add branding
+render_sidebar_branding()
+render_brand_header()
+render_page_title_with_branding("📚 Data Sources & Resources", 
+                                 "Comprehensive guide to finding training data for toxicity prediction and nanoparticle research")
 
 # Navigation
 st.sidebar.header("📑 Navigation")
@@ -25,14 +32,20 @@ section = st.sidebar.radio(
         "🧬 General Biotech",
         "🔍 Search Keywords",
         "📖 Research Papers",
-        "⚡ Pro Tips"
+        "⚡ Pro Tips",
+        "⚖️ Legal Notice"
     ]
 )
 
 st.divider()
 
+# ==================== LEGAL NOTICE ====================
+if section == "⚖️ Legal Notice":
+    render_research_disclaimer()
+    st.divider()
+
 # ==================== QUICK START ====================
-if section == "🎯 Quick Start":
+elif section == "🎯 Quick Start":
     st.header("🎯 Quick Start Guide")
     
     col1, col2 = st.columns(2)
@@ -541,3 +554,6 @@ Start with the Quick Start section, then explore specific databases for your res
 
 **Last Updated:** March 12, 2026
 """)
+
+# Add branded footer
+render_brand_footer()

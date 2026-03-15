@@ -10,15 +10,22 @@ import os
 import json
 from datetime import datetime
 from pathlib import Path
+from components.branding import (
+    render_brand_header, render_brand_footer, render_sidebar_branding,
+    render_page_title_with_branding, render_research_disclaimer
+)
 
 st.set_page_config(
-    page_title="Database Records",
+    page_title="Database Records - NanoBio Studio™",
     page_icon="📊",
     layout="wide",
 )
 
-st.title("📊 Database Records Viewer")
-st.markdown("View all training records stored in ml_module.db")
+# Add branding
+render_sidebar_branding()
+render_brand_header()
+render_page_title_with_branding("📊 Database Records Viewer", 
+                                 "View all training records stored in ml_module.db")
 
 # Sidebar controls
 st.sidebar.header("⚙️ Database Settings")
@@ -231,3 +238,5 @@ if rows:
 else:
     st.info("📭 No records found in database yet. Train a model to see records here!")
     st.write("Go to **ML Training → Train Models** to train your first model.")
+# Add branded footer
+render_brand_footer()

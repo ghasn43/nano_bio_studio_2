@@ -27,12 +27,15 @@ from nanobio_studio.app.ui.streamlit_auth import (
     show_user_info,
     StreamlitAuth,
 )
-
+from components.branding import (
+    render_brand_header, render_brand_footer, render_sidebar_branding,
+    render_page_title_with_branding, render_research_disclaimer
+)
 
 logger = logging.getLogger(__name__)
 
 st.set_page_config(
-    page_title="ML Training",
+    page_title="ML Training - NanoBio Studio™",
     page_icon="🤖",
     layout="wide",
 )
@@ -70,7 +73,11 @@ def load_training_history():
 def main():
     """Main page content"""
 
-    st.title("🤖 ML Model Training")
+    # Add branding
+    render_sidebar_branding()
+    render_brand_header()
+    render_page_title_with_branding("🤖 ML Model Training", 
+                                     "Train toxicity prediction models with your datasets")
 
     # ===== DATABASE INITIALIZATION FIX =====
     # Ensure ML module database tables exist before any tabs are loaded
@@ -1119,3 +1126,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Add branded footer at the absolute end
+render_brand_footer()
