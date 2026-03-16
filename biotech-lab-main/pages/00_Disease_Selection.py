@@ -168,6 +168,33 @@ if st.session_state.hcc_subtype:
     
     st.markdown("---")
     
+    # Generate trial ID when both selections are made
+    if st.session_state.hcc_subtype and st.session_state.selected_drug:
+        # Generate trial ID if not already created
+        if 'trial_id' not in st.session_state or not st.session_state.trial_id:
+            params = get_disease_design_parameters(st.session_state.hcc_subtype)
+            if params:
+                trial_id = TrialIDGenerator.generate_trial_id(
+                    st.session_state.hcc_subtype,
+                    params.size_nm_optimal
+                )
+                st.session_state.trial_id = trial_id
+                st.session_state.trial_disease_name = get_disease_name(st.session_state.hcc_subtype)
+                
+                # Create trial entry in database
+                create_trial_entry(
+                    trial_id=trial_id,
+                    disease_subtype=st.session_state.hcc_subtype,
+                    disease_name=get_disease_name(st.session_state.hcc_subtype),
+                    drug_name=st.session_state.selected_drug.drug_name if st.session_state.selected_drug else "Unknown",
+                    np_size_nm=params.size_nm_optimal,
+                    np_charge_mv=params.charge_value,
+                    np_peg_percent=params.peg_coating_percent,
+                    notes=f"Started with drug: {st.session_state.selected_drug.drug_name if st.session_state.selected_drug else 'Not selected'}"
+                )
+                
+                st.success(f"✅ Trial Created: {trial_id}")
+    
     # Show workflow navigation
     st.divider()
     if st.session_state.hcc_subtype and st.session_state.selected_drug:
