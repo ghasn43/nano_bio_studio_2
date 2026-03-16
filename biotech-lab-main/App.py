@@ -40,6 +40,7 @@ from components.branding import (
 from components.branding_config import APP_NAME, TAGLINE, COMPANY_NAME
 from components.ui_components import render_trial_header
 from components.sidebar_navigation import render_sidebar_navigation
+from components.workflow_guide import render_workflow_progress, render_quick_start_guide
 
 # ============================================================
 # SESSION PERSISTENCE - Keep user logged in across page refreshes
@@ -494,7 +495,85 @@ if "current_tab" not in st.session_state:
 mode = st.session_state.current_tab
 
 # ============================================================
-# 2️⃣ SESSION STATE
+# 🚀 WORKFLOW - Main User Entry Point
+# ============================================================
+# Show workflow progress if user is in the workflow
+if st.session_state.get("hcc_subtype"):
+    st.markdown("---")
+    render_workflow_progress()
+    st.markdown("---")
+else:
+    # Show workflow introduction on main dashboard
+    if mode == "🏠 Home" or mode is None:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white; margin: 20px 0;">
+            <h1>🧬 Welcome to NanoBio Studio</h1>
+            <h3>Design Nanoparticles for Hepatocellular Carcinoma Treatment</h3>
+            <p>Follow our 5-step guided workflow to design optimized nanoparticles and see real-time scoring.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Quick start cards
+        st.markdown("## 🗺️ Get Started - Choose Your Path")
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("""
+            <div style="background: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                <h4>🚀 Start New Design</h4>
+                <p>Begin the 5-step workflow to design your nanoparticle</p>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Start New Trial", key="start_workflow", use_container_width=True):
+                st.switch_page("pages/00_Disease_Selection.py")
+        
+        with col2:
+            st.markdown("""
+            <div style="background: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                <h4>📖 Learn How It Works</h4>
+                <p>Understand the complete nanoparticle design process</p>
+            </div>
+            """, unsafe_allow_html=True)
+            with st.expander("View Workflow Guide", expanded=False):
+                render_quick_start_guide()
+        
+        with col3:
+            st.markdown("""
+            <div style="background: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                <h4>📊 View Trial History</h4>
+                <p>See all your past designs and trials</p>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("View History", key="view_history", use_container_width=True):
+                st.switch_page("pages/10_Trial_History.py")
+        
+        st.markdown("---")
+        
+        st.markdown("""
+        ## 📋 The 5-Step Workflow
+        
+        **Step 1: Disease Selection** 🏥
+        - Choose HCC subtype and therapeutic drug
+        - System generates unique Trial ID
+        
+        **Step 2: Design Parameters** 📋
+        - Review recommended parameters
+        - See clinical trial data
+        
+        **Step 3: Design Calibration** ⚙️
+        - Manually tune parameters
+        - Watch real-time score update
+        
+        **Step 4: AI Co-Designer** 🤖
+        - Get AI optimization suggestions
+        - See alternative designs
+        
+        **Step 5: Trial History** 📊
+        - Compare multiple trials
+        - Export results
+        """)
+
 # ============================================================
 
 if "design" not in st.session_state:
