@@ -38,6 +38,8 @@ from components.branding import (
     render_research_disclaimer, render_sidebar_branding, render_licensing_contact
 )
 from components.branding_config import APP_NAME, TAGLINE, COMPANY_NAME
+from components.ui_components import render_trial_header
+from components.sidebar_navigation import render_sidebar_navigation
 
 # ============================================================
 # SESSION PERSISTENCE - Keep user logged in across page refreshes
@@ -123,6 +125,11 @@ restore_active_session()
 # ============================================================
 render_brand_header()
 render_sidebar_branding()
+
+# ============================================================
+# 🔬 TRIAL HEADER - Persistent trial tracking
+# ============================================================
+render_trial_header()
 
 # ============================================================
 # ⚠️ RESEARCH DISCLAIMER & IP NOTICE (Expandable)
@@ -472,111 +479,18 @@ with st.sidebar:
 
 
 # ============================================================
-# 🧭 NAVIGATION BAR (Fixed - Properly Clickable, with RBAC)
+# 🧭 UNIFIED SIDEBAR NAVIGATION
 # ============================================================
+# All navigation is now in the sidebar for better UX
+# Removed horizontal menu in favor of organized sidebar structure
 
-# Initialize session state for navigation
+render_sidebar_navigation()
+
+# Initialize session state for navigation (kept for compatibility)
 if "current_tab" not in st.session_state:
     st.session_state.current_tab = "🏠 Home"
 
-# Define all available tabs
-all_tabs = [
-    "🏠 Home", "🧱 Materials", "🎨 Design", "📈 Delivery",
-    "☣️ Toxicity", "💰 Cost", "🧾 Protocol", "🎯 Quiz"
-]
-
-# Only add 3D View if Plotly is available
-if PLOTLY_AVAILABLE:
-    all_tabs.append("🔬 3D View")
-
-# Add AI Optimization if scikit-learn is available
-if SKLEARN_AVAILABLE:
-    all_tabs.append("🤖 AI Optimize")
-
-# Add Design History tab for logged-in users
-if st.session_state.logged_in:
-    all_tabs.append("📊 History")
-
-# Add Admin tab if user is admin
-if get_user_role() == Role.ADMIN:
-    all_tabs.append("⚙️ Admin")
-
-# Filter tabs based on user's role
-available_tabs = get_available_tabs(all_tabs)
-
-# If current tab is not accessible, switch to Home
-if st.session_state.current_tab not in available_tabs and "🏠 Home" in available_tabs:
-    st.session_state.current_tab = "🏠 Home"
-
-# Create navigation buttons
-st.markdown("""
-<style>
-div.navbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-    padding: 8px 6px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-div.navbar button {
-    flex: 1 1 auto;
-    margin: 2px;
-    padding: 8px 12px !important;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background-color: white;
-    color: #333;
-    font-weight: 600;
-    font-size: 10px !important;
-    line-height: 1.2 !important;
-    transition: all 0.25s;
-    cursor: pointer;
-}
-div.navbar button span {
-    font-size: 10px !important;
-}
-div.navbar button:hover {
-    background-color: #e3f2fd !important;
-    border-color: #90caf9 !important;
-    transform: translateY(-1px);
-}
-div.navbar button:active {
-    transform: translateY(0px);
-}
-/* Highlight current tab */
-div.navbar button.current-tab {
-    background-color: #1976d2 !important;
-    color: white !important;
-    border-color: #1976d2 !important;
-}
-/* Override Streamlit's default button styles */
-[data-testid="column"] div button {
-    font-size: 10px !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Create navigation bar
-st.markdown('<div class="navbar">', unsafe_allow_html=True)
-cols = st.columns(len(available_tabs))
-
-for i, tab_name in enumerate(available_tabs):
-    with cols[i]:
-        # Determine if this is the current tab
-        is_current = st.session_state.current_tab == tab_name
-        button_label = tab_name
-        
-        if st.button(button_label, use_container_width=True, key=f"nav_{i}", 
-                    type="primary" if is_current else "secondary"):
-            st.session_state.current_tab = tab_name
-            st.rerun()
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# Set the current mode based on navigation
+# Set the current mode based on navigation (for compatibility with existing code)
 mode = st.session_state.current_tab
 
 # ============================================================
