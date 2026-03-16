@@ -17,6 +17,7 @@ from modules.disease_database import (
 from modules.ml_disease_connector import score_design_for_disease
 from modules.trial_registry import update_trial_status
 from components.ui_components import render_trial_header
+from components.workflow_guide import render_workflow_progress, render_step_header, render_navigation_buttons
 
 st.set_page_config(page_title="Design Calibration", layout="wide")
 
@@ -42,6 +43,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Show workflow progress
+render_workflow_progress()
+
+st.divider()
+
 # Display trial header
 render_trial_header()
 
@@ -52,12 +58,7 @@ if not st.session_state.get("hcc_subtype"):
 hcc_subtype = st.session_state.hcc_subtype
 disease_name = get_disease_name(hcc_subtype)
 
-st.markdown(f"""
-<div class="calibration-card">
-    <h1>Step 3: Design Calibration for {disease_name}</h1>
-    <p>Manually tune nanoparticle parameters and see real-time optimization scoring.</p>
-</div>
-""", unsafe_allow_html=True)
+render_step_header(3)
 
 # Get recommended parameters
 params = get_disease_design_parameters(hcc_subtype)
@@ -270,6 +271,17 @@ with col3:
         st.success("✓ PEG adequate for immune evasion")
     else:
         st.warning("⚠️ Lower PEG - increased RES uptake possible")
+
+st.markdown("---")
+
+st.markdown("## Navigation")
+
+# Workflow navigation
+render_navigation_buttons(
+    current_step=3,
+    prev_step_page="pages/01_Design_Parameters.py",
+    next_step_page="pages/10_Trial_History.py"
+)
 
 st.markdown("---")
 

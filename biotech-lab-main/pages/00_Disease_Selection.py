@@ -5,18 +5,26 @@ import streamlit as st
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from modules.disease_database import (
     get_liver_cancer_subtypes, 
     get_disease_name,
     get_disease_clinical_context,
     get_recommended_drugs,
-    format_clinical_context_for_display
+    format_clinical_context_for_display,
+    get_disease_design_parameters
 )
 from modules.clinical_trials_data import get_trials_for_hcc_subtype, format_trial_for_display
+from modules.trial_registry import TrialIDGenerator, create_trial_entry
+from components.workflow_guide import render_workflow_progress, render_step_header, render_navigation_buttons, render_quick_start_guide
 
 st.set_page_config(page_title="Disease & Drug Selection", layout="wide")
+
+# Show workflow progress
+render_workflow_progress()
+
+st.divider()
 
 st.markdown("""
 <style>
@@ -30,12 +38,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="disease-header">
-    <h1>Step 1: Disease and Drug Selection</h1>
-    <p>Select cancer type, subtype, and therapeutic drug to auto-populate design parameters.</p>
-</div>
-""", unsafe_allow_html=True)
+render_step_header(1)
+
+render_quick_start_guide()
 
 if 'cancer_type' not in st.session_state:
     st.session_state.cancer_type = None
@@ -46,14 +51,11 @@ if 'selected_drug' not in st.session_state:
 
 st.markdown("## Cancer Type Selection")
 
+st.info("🧬 **Currently Supporting: Hepatocellular Carcinoma (HCC)** - The most common type of liver cancer")
+st.write("Other cancer types (Lung, Breast, Pancreatic, etc.) are coming soon!")
+
 cancer_types = {
-    "liver": "Liver Cancer (Hepatocellular Carcinoma)",
-    "lung": "Lung Cancer",
-    "breast": "Breast Cancer",
-    "pancreatic": "Pancreatic Cancer",
-    "brain": "Brain Tumor",
-    "colorectal": "Colorectal Cancer",
-    "ovarian": "Ovarian Cancer",
+    "liver": "Liver Cancer (Hepatocellular Carcinoma - HCC)",
 }
 
 col1, col2 = st.columns([2, 3])
@@ -68,9 +70,13 @@ with col1:
     st.session_state.cancer_type = selected_cancer
 
 with col2:
-    st.write("### Why This Cancer Type?")
-    if selected_cancer == "liver":
-        st.info("Hepatocellular Carcinoma - Explore HCC subtypes with different design strategies")
+    st.write("### Why HCC?")
+    st.write("""
+    - Most common primary liver cancer (70-85% of all liver cancers)
+    - Affects ~850,000 people globally per year
+    - High mortality but treatable with NP-based drug delivery
+    - Multiple subtypes requiring different design strategies
+    """)
 
 if selected_cancer == "liver":
     st.markdown("## HCC Subtype Selection")
@@ -162,5 +168,12 @@ if st.session_state.hcc_subtype:
     
     st.markdown("---")
     
-    if st.button("Continue to Design Parameters", key="continue_to_design"):
-        st.info("Navigate to page: 01_Design_Parameters")
+    # Show workflow navigation
+    st.divider()
+    if st.session_state.hcc_subtype and st.session_state.selected_drug:
+        render_navigation_buttons(
+            current_step=1,
+            next_step_page="pages/01_Design_Parameters.py"
+        )
+    else:
+        st.warning("⚠️ Please select both HCC subtype and drug to continue")

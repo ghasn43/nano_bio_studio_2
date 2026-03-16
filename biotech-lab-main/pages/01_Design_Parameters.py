@@ -6,7 +6,7 @@ import streamlit as st
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from modules.disease_database import (
     get_disease_design_parameters,
@@ -19,6 +19,8 @@ from modules.ml_disease_connector import (
     score_design_for_disease,
     get_similar_designs_for_disease
 )
+from components.ui_components import render_trial_header
+from components.workflow_guide import render_workflow_progress, render_step_header, render_navigation_buttons
 
 st.set_page_config(page_title="Design Parameters", layout="wide")
 
@@ -41,6 +43,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Show workflow progress
+render_workflow_progress()
+
+st.divider()
+
+# Display trial header
+render_trial_header()
+
 if not st.session_state.get("hcc_subtype"):
     st.warning("Please select disease type first on the Disease Selection page")
     st.stop()
@@ -48,12 +58,7 @@ if not st.session_state.get("hcc_subtype"):
 hcc_subtype = st.session_state.hcc_subtype
 disease_name = get_disease_name(hcc_subtype)
 
-st.markdown(f"""
-<div class="param-card">
-    <h1>Step 2: Design Parameters for {disease_name}</h1>
-    <p>Platform-optimized nanoparticle specifications based on clinical evidence.</p>
-</div>
-""", unsafe_allow_html=True)
+render_step_header(2)
 
 st.markdown(f"## Disease: {disease_name}")
 
@@ -143,13 +148,13 @@ if params:
     if trials:
         st.write(f"Top {min(3, len(trials))} relevant clinical trials:")
         for i, trial in enumerate(trials[:3], 1):
-            with st.expander(f"{i}. {trial.trial_name} - {trial.drugs_tested}"):
+            with st.expander(f"{i}. {trial.trial_name} - {', '.join(trial.drug_names)}"):
                 st.write(f"Phase: {trial.phase.name}")
                 st.write(f"Status: {trial.status.name}")
-                st.write(f"Patients: {trial.patient_population}")
+                st.write(f"Patients: {trial.study_population_count}")
                 st.write(f"Primary Endpoint: {trial.primary_endpoint}")
-                if trial.overall_survival_months:
-                    st.write(f"Overall Survival: {trial.overall_survival_months} months")
+                if trial.median_overall_survival_months:
+                    st.write(f"Overall Survival: {trial.median_overall_survival_months} months")
     
     st.markdown("---")
     
@@ -212,7 +217,16 @@ if params:
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Launch AI Co-Designer", key="launch_designer"):
-            st.info("AI Co-Designer feature coming soon")
+            st.switch_page("pages/9_AI_Co_Designer.py")
     with col2:
         if st.button("View Data Analytics", key="view_analytics"):
-            st.info("Navigate to page: 17_Data_Analytics")
+            st.switch_page("pages/17_Data_Analytics.py")
+    
+    st.divider()
+    
+    # Workflow navigation
+    render_navigation_buttons(
+        current_step=2,
+        prev_step_page="pages/00_Disease_Selection.py",
+        next_step_page="pages/02_Design_Calibration.py"
+    )
