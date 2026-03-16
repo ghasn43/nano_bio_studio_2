@@ -583,17 +583,17 @@ else:
         example_cols = st.columns(3)
         
         with example_cols[0]:
-            if st.button("💉 mRNA Vaccine", use_container_width=True, help="COVID-19 mRNA Vaccine Example"):
+            if st.button("💉 mRNA Vaccine", use_container_width=True, help="COVID-19 mRNA Vaccine Example", key="example_mrna_vaccine"):
                 st.session_state.design.update(st.session_state.example_designs["COVID-19 mRNA Vaccine"])
                 st.success("✅ Loaded mRNA Vaccine example!")
         
         with example_cols[1]:
-            if st.button("🎯 Cancer Therapy", use_container_width=True, help="Cancer Drug Delivery Example"):
+            if st.button("🎯 Cancer Therapy", use_container_width=True, help="Cancer Drug Delivery Example", key="example_cancer_therapy"):
                 st.session_state.design.update(st.session_state.example_designs["Cancer Drug Delivery"])
                 st.success("✅ Loaded Cancer Therapy example!")
         
         with example_cols[2]:
-            if st.button("🧬 Gene Therapy", use_container_width=True, help="Gene Therapy Vector Example"):
+            if st.button("🧬 Gene Therapy", use_container_width=True, help="Gene Therapy Vector Example", key="example_gene_therapy"):
                 st.session_state.design.update(st.session_state.example_designs["Gene Therapy Vector"])
                 st.success("✅ Loaded Gene Therapy example!")
 
