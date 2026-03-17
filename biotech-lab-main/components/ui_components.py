@@ -3,6 +3,12 @@ UI Components Module - Reusable UI components for all pages
 """
 
 import streamlit as st
+import sys
+from pathlib import Path
+
+# Ensure parent directory is on path for module imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from modules.trial_registry import get_trial_by_id
 
 def render_trial_header():
