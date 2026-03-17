@@ -7,7 +7,7 @@ User authentication interface for the NanoBio Studio.
 import streamlit as st
 import logging
 from datetime import datetime
-from nanobio_studio.app.ui.streamlit_auth import StreamlitAuth, show_user_info
+from streamlit_auth import StreamlitAuth, show_user_info
 
 
 logger = logging.getLogger(__name__)

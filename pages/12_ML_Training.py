@@ -20,13 +20,20 @@ from nanobio_studio.app.ml.task_profiles import (
     get_profile_descriptions,
     apply_profile,
 )
-from nanobio_studio.app.auth import Permission
-from nanobio_studio.app.ui.streamlit_auth import (
+from streamlit_auth import (
     require_login,
     require_permission,
     show_user_info,
     StreamlitAuth,
 )
+
+# Stub Permission for compatibility
+class Permission:
+    MODEL_TRAIN = "model_train"
+    MODEL_READ = "model_read"
+    MODEL_DELETE = "model_delete"
+    DATASET_READ = "dataset_read"
+    DATASET_CREATE = "dataset_create"
 from components.branding import (
     render_brand_header, render_brand_footer, render_sidebar_branding,
     render_page_title_with_branding, render_research_disclaimer
