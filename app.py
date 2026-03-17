@@ -36,6 +36,11 @@ from ui.styling import apply_css_profile
 from tabs import design as design_tab
 
 # ============================================================
+# PAGE CONFIG - MUST BE FIRST
+# ============================================================
+st.set_page_config(page_title="NanoBio Studio", page_icon="🧬", layout="wide")
+
+# ============================================================
 # SESSION PERSISTENCE - Keep user logged in across page refreshes
 # ============================================================
 # Streamlit's session_state persists across browser refreshes automatically
@@ -56,47 +61,42 @@ def initialize_session_state():
 initialize_session_state()
 
 # ============================================================
-# ⚠️ IMPORTANT DISCLAIMER
+# 🔐 LOGIN GATE - Check authentication BEFORE rendering UI
 # ============================================================
 
-# ============================================================
-# ⚠️ IMPORTANT DISCLAIMER (Expandable)
-# ============================================================
-with st.expander("⚠️ IMPORTANT DISCLAIMER - Click to expand", expanded=False):
-    st.markdown("""
-    <div style='background-color:#fff3cd; border-left:5px solid #ffc107; padding:15px; margin-bottom:10px; border-radius:5px;'>
-    <h4 style='color:#856404; margin-top:0;'>⚠️ IMPORTANT NOTICE</h4>
-    <p style='color:#856404; margin-bottom:5px;'>
-    <strong>This application is for EDUCATIONAL AND RESEARCH PURPOSES ONLY.</strong>
-    </p>
-    <ul style='color:#856404; margin-top:5px;'>
-    <li>This tool is NOT intended for medical diagnosis, treatment, or clinical decision-making</li>
-    <li>Results and recommendations are based on computational models and may not reflect real-world outcomes</li>
-    <li>All nanoparticle designs should be validated through proper experimental procedures</li>
-    <li>Users assume full responsibility for any decisions made based on information from this tool</li>
-    <li>Consult with qualified professionals for medical or therapeutic applications</li>
-    </ul>
-    </div>
+def require_login():
+    """Check login status and show login page if needed"""
+    # Initialize session state with defaults
+    if "logged_in" not in st.session_state:
+        st.session_state.logged_in = False
+        st.session_state.username = None
+        st.session_state.role = None
     
-    <div style='background-color:#f8f9fa; border:1px solid #dee2e6; padding:12px; margin-top:10px; border-radius:4px;'>
-    <p style='color:#333; margin:0; font-weight:bold;'>
-    📋 <strong>INTELLECTUAL PROPERTY NOTICE</strong>
-    </p>
-    <p style='color:#333; margin:5px 0 0 0;'>
-    This application is the intellectual property of <strong>Experts Group FZE</strong>
-    </p>
-    <p style='color:#333; margin:2px 0;'>
-    📞 <strong>Mobile:</strong> 00 971 50 6690381
-    </p>
-    <p style='color:#333; margin:2px 0 0 0;'>
-    📧 <strong>Email:</strong> info@expertsgroup.me
-    </p>
-    </div>
+    # If user is already logged in, keep them logged in (don't check expiry on refresh)
+    if st.session_state.logged_in and st.session_state.username:
+        try:
+            # Update last activity to keep session alive during page refreshes
+            update_last_activity(st.session_state.username)
+        except:
+            pass
+        
+        # User is logged in - continue to app
+        return
     
-    <p style='color:#856404; margin-top:10px; font-size:0.9em; text-align:center;'>
-    <strong>By using this application, you acknowledge and accept these limitations.</strong>
-    </p>
-    """, unsafe_allow_html=True)
+    # User is not logged in - show login page
+    show_login_page()
+
+
+try:
+    require_login()
+except Exception as e:
+    st.error(f"Error in login: {str(e)}")
+    st.info("Please refresh the page to try again")
+    st.stop()
+
+# ============================================================
+# ⚠️ IMPORTANT DISCLAIMER WILL BE SHOWN AFTER LOGIN
+# ============================================================
 
 # Check for optional dependencies
 try:
@@ -116,25 +116,8 @@ except ImportError:
     SKLEARN_AVAILABLE = False
     st.warning("⚠️ scikit-learn not available. AI optimization will be disabled. Install with: `pip install scikit-learn`")
 
-# Display README content dynamically (expandable)
-readme_path = Path(__file__).parent / "README.md"
-
-if readme_path.exists():
-    with open(readme_path, "r", encoding="utf-8") as f:
-        readme_content = f.read()
-
-    with st.expander("📘 About NanoBio Studio — Click to expand"):
-        st.markdown(readme_content, unsafe_allow_html=True)
-else:
-    st.info("ℹ️ README.md not found. Please check your repository.")
-
 # ============================================================
-# 1️⃣ PAGE CONFIG
-# ============================================================
-st.set_page_config(page_title="NanoBio Studio", page_icon="🧬", layout="wide")
-
-# ============================================================
-# 🎨 AGGRESSIVE FONT SIZE OVERRIDE - Apply BEFORE anything else
+# 🎨 CSS STYLING
 # ============================================================
 st.markdown("""<style>
 /* Force font size changes across entire app */
@@ -349,30 +332,6 @@ def signup_tab_content():
     - **Email:** Optional but recommended for account recovery
     """)
 
-
-def require_login():
-    """Check login status and show login page if needed"""
-    # Initialize session state with defaults
-    if "logged_in" not in st.session_state:
-        st.session_state.logged_in = False
-        st.session_state.username = None
-        st.session_state.role = None
-    
-    # If user is already logged in, keep them logged in (don't check expiry on refresh)
-    if st.session_state.logged_in and st.session_state.username:
-        try:
-            # Update last activity to keep session alive during page refreshes
-            update_last_activity(st.session_state.username)
-        except:
-            pass
-        
-        # User is logged in - continue to app
-        return
-    
-    # User is not logged in - show login page
-    show_login_page()
-
-require_login()
 
 # ============================================================
 # KEEP SESSION ALIVE - Update activity on every page load/interaction
