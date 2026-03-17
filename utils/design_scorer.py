@@ -321,13 +321,13 @@ class DesignScorer:
             recommendations.append("⚠️ High polydispersity. Consider improving formulation uniformity.")
         
         if scores['material'] < 70:
-            recommendations.append(f"⚠️ {design['material']} may not be ideal for {design['payload']} delivery.")
+            recommendations.append(f"⚠️ {design.get('Material', 'Lipid NP')} may not be ideal for drug delivery.")
         
         if scores['ligand'] < 70:
-            recommendations.append(f"⚠️ Consider alternative surface ligands for better {design['target']} targeting.")
+            recommendations.append(f"⚠️ Consider alternative surface ligands for better {design.get('Target', 'Liver Cells')} targeting.")
         
         if scores['loading'] < 70:
-            recommendations.append(f"⚠️ Payload loading may be suboptimal for {design['payload']}.")
+            recommendations.append(f"⚠️ Payload loading may be suboptimal.")
         
         if not recommendations:
             recommendations.append("✅ Excellent design! All parameters are well-optimized.")

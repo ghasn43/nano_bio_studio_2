@@ -124,9 +124,16 @@ LIVER_CANCER_DATABASE = {
         ],
         
         "tissue_barriers": {
+            "difficulty_level": 3,
             "difficulty": "Moderate",
             "description": "Good blood supply, normal vascularization",
-            "key_challenges": ["Hepatic clearance", "immune recognition", "tumor penetration"]
+            "key_challenges": ["Hepatic clearance", "immune recognition", "tumor penetration"],
+            "advanced_strategies": [
+                "Standard NP design with moderate targeting",
+                "Focus on hepatocyte-specific ASGPR ligands",
+                "Optimize for systemic circulation time",
+                "Consider drug combination for enhanced efficacy"
+            ]
         },
         
         "recommended_drugs": [
@@ -194,9 +201,16 @@ LIVER_CANCER_DATABASE = {
         ],
         
         "tissue_barriers": {
+            "difficulty_level": 4,
             "difficulty": "Moderate-High",
             "description": "Variable vasculature, some hypoxic regions",
-            "key_challenges": ["Hypoxic regions", "stromal barriers", "immune infiltration"]
+            "key_challenges": ["Hypoxic regions", "stromal barriers", "immune infiltration"],
+            "advanced_strategies": [
+                "Increase PEG coating for immune evasion",
+                "Use slight negative charge for stromal penetration",
+                "Consider anti-angiogenic agents in combination",
+                "Optimize for variable vascularization regions"
+            ]
         },
         
         "recommended_drugs": [
@@ -266,6 +280,7 @@ LIVER_CANCER_DATABASE = {
         ],
         
         "tissue_barriers": {
+            "difficulty_level": 5,
             "difficulty": "VERY HIGH - Design Challenging",
             "description": "Hypoxic core, dense stromal barrier, poor vascularization",
             "key_challenges": [
@@ -289,7 +304,7 @@ LIVER_CANCER_DATABASE = {
                 drug_name="Atezolizumab + Bevacizumab",
                 drug_type="immunotherapy + anti-angiogenic",
                 mechanism="PD-L1 checkpoint inhibitor + anti-VEGF",
-                reason_for_subtype="𝐒𝐞𝐬𝐞𝐞 𝐚𝐧𝐠𝐢𝐨𝐠𝐞𝐧𝐞𝐬𝐢𝐬 𝐢𝐧 𝐡𝐲𝐩𝐨𝐱𝐢𝐜 𝐟𝐇𝐂𝐋 + breaks immune tolerance",
+                reason_for_subtype="Restores angiogenesis in hypoxic HCC-L + breaks immune tolerance",
                 typical_dose="Atezolizumab 840mg IV + Bevacizumab 15mg/kg IV Q3W",
                 clinical_trials=["IMbrave150 (Phase 3) - significant benefit in advanced HCC"]
             ),
@@ -367,7 +382,7 @@ def get_design_rationale(subtype: str) -> List[str]:
         return LIVER_CANCER_DATABASE[subtype]["design_rationale"]
     return []
 
-def get_tissue_barrier_info(subtype: str) -> Dict:
+def get_tissue_barrier_analysis(subtype: str) -> Dict:
     """Get tissue barrier information for a specific cancer subtype"""
     if subtype in LIVER_CANCER_DATABASE:
         return LIVER_CANCER_DATABASE[subtype]["tissue_barriers"]

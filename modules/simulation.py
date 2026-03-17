@@ -6,6 +6,9 @@ import streamlit as st
 import numpy as np
 import sys
 from pathlib import Path
+from io import BytesIO
+from datetime import datetime
+import pandas as pd
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -16,8 +19,214 @@ from utils.pk_model import (
     create_pk_plot
 )
 
+def generate_pdf_report(design, pk_params, results, fig):
+    """
+    Generate a comprehensive PDF report of the simulation results
+    """
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_CENTER
+    
+    # Create PDF buffer
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter,
+                           rightMargin=0.75*inch, leftMargin=0.75*inch,
+                           topMargin=0.75*inch, bottomMargin=0.75*inch)
+    
+    # Container for elements
+    story = []
+    
+    # Styles
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#1f77b4'),
+        spaceAfter=12,
+        alignment=TA_CENTER
+    )
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#2ca02c'),
+        spaceAfter=6,
+        spaceBefore=6
+    )
+    
+    # Title
+    story.append(Paragraph("Delivery Simulation Report (PK/PD Analysis)", title_style))
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Date and design name
+    timestamp = datetime.now().strftime("%B %d, %Y at %H:%M")
+    story.append(Paragraph(f"<b>Report Generated:</b> {timestamp}", styles['Normal']))
+    formulation_name = design.get('Material', 'Custom Design')
+    story.append(Paragraph(f"<b>Formulation:</b> {formulation_name}", styles['Normal']))
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Design Parameters Section
+    story.append(Paragraph("Design Parameters", heading_style))
+    design_data = [
+        ['Parameter', 'Value'],
+        ['Material Type', design.get('Material', 'Lipid NP')],
+        ['Size (nm)', f"{design.get('Size', 100):.1f}"],
+        ['Charge (mV)', f"{design.get('Charge', -5):.1f}"],
+        ['Encapsulation (%)', f"{design.get('Encapsulation', 70):.1f}"],
+        ['Dose (mg/kg)', f"{design.get('dose', 10):.1f}"],
+        ['Target', design.get('Target', 'Liver Cells')],
+        ['PDI', f"{design.get('PDI', 0.15):.2f}"],
+    ]
+    design_table = Table(design_data, colWidths=[2.5*inch, 2.5*inch])
+    design_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f77b4')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+    ]))
+    story.append(design_table)
+    story.append(Spacer(1, 0.2*inch))
+    
+    # PK Parameters Section
+    story.append(Paragraph("Pharmacokinetic Parameters", heading_style))
+    pk_data = [
+        ['Parameter', 'Value', 'Unit'],
+        ['Plasma C_max', f"{pk_params['C_max_plasma']:.2f}", 'ng/mL'],
+        ['Plasma T_max', f"{pk_params['T_max_plasma']:.1f}", 'hours'],
+        ['Tissue C_max', f"{pk_params['C_max_tissue']:.2f}", 'ng/mL'],
+        ['Tissue T_max', f"{pk_params['T_max_tissue']:.1f}", 'hours'],
+        ['AUC Plasma', f"{pk_params['AUC_plasma']:.1f}", 'ng·h/mL'],
+        ['AUC Tissue', f"{pk_params['AUC_tissue']:.1f}", 'ng·h/mL'],
+        ['Plasma t₁/₂', f"{pk_params['t_half_plasma']:.1f}" if pk_params['t_half_plasma'] else 'N/A', 'hours'],
+        ['Tissue/Plasma Ratio', f"{pk_params['tissue_accumulation_ratio']:.2f}", 'ratio'],
+    ]
+    pk_table = Table(pk_data, colWidths=[2.0*inch, 1.5*inch, 1.5*inch])
+    pk_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2ca02c')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.lightblue),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+    ]))
+    story.append(pk_table)
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Page break before plot
+    story.append(PageBreak())
+    
+    # Add plot image
+    story.append(Paragraph("Concentration-Time Profiles", heading_style))
+    plot_buffer = BytesIO()
+    fig.savefig(plot_buffer, format='png', dpi=150, bbox_inches='tight')
+    plot_buffer.seek(0)
+    plot_image = Image(plot_buffer, width=6.5*inch, height=4*inch)
+    story.append(plot_image)
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Clinical Interpretation
+    story.append(PageBreak())
+    story.append(Paragraph("Clinical Interpretation & Analysis", heading_style))
+    
+    interpretation_text = "<b>Distribution Kinetics:</b><br/>"
+    if pk_params['T_max_tissue'] > pk_params['T_max_plasma']:
+        interpretation_text += f"✓ Tissue peak is delayed by {pk_params['T_max_tissue'] - pk_params['T_max_plasma']:.1f} hours relative to plasma peak, indicating typical distribution kinetics with good tissue penetration.<br/><br/>"
+    else:
+        interpretation_text += "⚠ Tissue reaches peak concentration earlier than plasma, which may indicate rapid tissue distribution or altered clearance kinetics.<br/><br/>"
+    
+    interpretation_text += "<b>Tissue Targeting:</b><br/>"
+    if pk_params['tissue_accumulation_ratio'] > 1.5:
+        interpretation_text += f"✓ Strong tissue accumulation observed (ratio: {pk_params['tissue_accumulation_ratio']:.2f}), indicating excellent targeting efficacy.<br/><br/>"
+    elif pk_params['tissue_accumulation_ratio'] > 1.0:
+        interpretation_text += f"✓ Moderate tissue accumulation (ratio: {pk_params['tissue_accumulation_ratio']:.2f}), suggesting reasonable tissue targeting.<br/><br/>"
+    else:
+        interpretation_text += f"⚠ Limited tissue accumulation (ratio: {pk_params['tissue_accumulation_ratio']:.2f}), may need formulation optimization or targeting ligand adjustments.<br/><br/>"
+    
+    interpretation_text += "<b>Plasma Clearance:</b><br/>"
+    if pk_params['t_half_plasma'] is not None:
+        if pk_params['t_half_plasma'] < 6:
+            interpretation_text += f"⚠ Rapid clearance (t₁/₂ = {pk_params['t_half_plasma']:.1f} h) - increased PEGylation or surface modifications may extend circulation time.<br/><br/>"
+        elif pk_params['t_half_plasma'] < 24:
+            interpretation_text += f"✓ Moderate circulation time (t₁/₂ = {pk_params['t_half_plasma']:.1f} h) - suitable for most therapeutic applications.<br/><br/>"
+        else:
+            interpretation_text += f"✓ Extended circulation (t₁/₂ = {pk_params['t_half_plasma']:.1f} h) - excellent for systemic delivery and repeated dosing strategies.<br/><br/>"
+    
+    interpretation_text += "<b>Peak Exposure Analysis:</b><br/>"
+    if pk_params['C_max_plasma'] > 3 * pk_params['C_max_tissue']:
+        interpretation_text += "High plasma exposure relative to tissue - consider dose adjustment or formulation changes to improve tissue selectivity.<br/>"
+    elif pk_params['C_max_tissue'] > pk_params['C_max_plasma']:
+        interpretation_text += "✓ Favorable tissue-selective profile, suggesting effective targeting and reduced systemic exposure."
+    
+    story.append(Paragraph(interpretation_text, styles['Normal']))
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Build PDF
+    doc.build(story)
+    buffer.seek(0)
+    return buffer
+
+def get_complete_design():
+    """Get design dict with all required keys, filling in defaults if missing"""
+    defaults = {
+        "Material": "Lipid NP",
+        "Size": 100,
+        "Charge": -5,
+        "Encapsulation": 70,
+        "Target": "Liver Cells",
+        "Ligand": "GalNAc",
+        "Receptor": "ASGPR",
+        "HydrodynamicSize": 120,
+        "PDI": 0.15,
+        "SurfaceArea": 250,
+        "PoreSize": 2.5,
+        "DegradationTime": 30,
+        "Stability": 85,
+        "dose": 10.0,
+        "kabs": 0.5,
+        "kel": 0.1,
+        "k12": 0.3,
+        "k21": 0.2
+    }
+    
+    # Get current design or start with defaults
+    current = st.session_state.design if hasattr(st.session_state, 'design') and st.session_state.design else {}
+    
+    # Merge current with defaults (defaults fill in missing keys)
+    complete_design = defaults.copy()
+    complete_design.update(current)
+    
+    return complete_design
+
 def show():
     """Display PK/PD simulation interface"""
+    
+    try:
+        # Initialize session state variables if they don't exist
+        if 'simulation_results' not in st.session_state:
+            st.session_state.simulation_results = None
+        if 'pdf_report' not in st.session_state:
+            st.session_state.pdf_report = None
+        
+        # Ensure design is complete with all required keys
+        st.session_state.design = get_complete_design()
+    except Exception as e:
+        st.error(f"❌ Error initializing simulation: {str(e)}")
+        st.stop()
+    
     st.title("📊 Delivery Simulation (PK/PD)")
     st.markdown("Visualize drug delivery kinetics with two-compartment pharmacokinetic modeling")
     
@@ -28,20 +237,20 @@ def show():
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.metric("Formulation", st.session_state.design['name'])
-            st.metric("Material", st.session_state.design['material'].split('(')[0].strip())
+            st.metric("Material", st.session_state.design.get('Material', 'Lipid NP'))
+            st.metric("Target", st.session_state.design.get('Target', 'Liver Cells'))
         
         with col2:
-            st.metric("Size", f"{st.session_state.design['size']:.1f} nm")
-            st.metric("Charge", f"{st.session_state.design['charge']:.1f} mV")
+            st.metric("Size", f"{st.session_state.design.get('Size', 100):.1f} nm")
+            st.metric("Charge", f"{st.session_state.design.get('Charge', -5):.1f} mV")
         
         with col3:
-            st.metric("Payload", st.session_state.design['payload'])
-            st.metric("Dose", f"{st.session_state.design['dose']:.1f} mg/kg")
+            st.metric("Encapsulation", f"{st.session_state.design.get('Encapsulation', 70):.1f}%")
+            st.metric("Ligand", st.session_state.design.get('Ligand', 'None'))
         
         with col4:
-            st.metric("Target", st.session_state.design['target'])
-            st.metric("PDI", f"{st.session_state.design['pdi']:.2f}")
+            st.metric("PDI", f"{st.session_state.design.get('PDI', 0.15):.2f}")
+            st.metric("Stability", f"{st.session_state.design.get('Stability', 85):.0f}%")
     
     st.markdown("---")
     
@@ -77,13 +286,20 @@ def show():
     with col_run2:
         if st.button("🚀 Run Simulation", type="primary", use_container_width=True):
             with st.spinner("Running two-compartment PK model..."):
+                # Get PK parameters from design or use defaults
+                dose = st.session_state.design.get('dose', 10.0)  # mg/kg
+                kabs = st.session_state.design.get('kabs', 0.5)   # absorption rate
+                kel = st.session_state.design.get('kel', 0.1)     # elimination rate
+                k12 = st.session_state.design.get('k12', 0.3)     # central to peripheral transfer
+                k21 = st.session_state.design.get('k21', 0.2)     # peripheral to central transfer
+                
                 # Run simulation
                 time, C_plasma, C_tissue = two_compartment_model(
-                    dose=st.session_state.design['dose'],
-                    kabs=st.session_state.design['kabs'],
-                    kel=st.session_state.design['kel'],
-                    k12=st.session_state.design['k12'],
-                    k21=st.session_state.design['k21'],
+                    dose=dose,
+                    kabs=kabs,
+                    kel=kel,
+                    k12=k12,
+                    k21=k21,
                     duration=duration,
                     dt=time_step
                 )
@@ -242,7 +458,7 @@ def show():
             st.download_button(
                 label="📥 Download Concentration Data (CSV)",
                 data=csv_data,
-                file_name=f"{st.session_state.design['name']}_pk_data.csv",
+                file_name=f"{st.session_state.design.get('Material', 'design')}_pk_data.csv",
                 mime="text/csv",
                 use_container_width=True
             )
@@ -255,15 +471,13 @@ def show():
             st.download_button(
                 label="📥 Download PK Parameters (CSV)",
                 data=csv_params,
-                file_name=f"{st.session_state.design['name']}_pk_params.csv",
+                file_name=f"{st.session_state.design.get('Material', 'design')}_pk_params.csv",
                 mime="text/csv",
                 use_container_width=True
             )
         
         with col_dl3:
             # Export plot
-            from io import BytesIO
-            
             buf = BytesIO()
             fig.savefig(buf, format='png', dpi=300, bbox_inches='tight')
             buf.seek(0)
@@ -271,10 +485,43 @@ def show():
             st.download_button(
                 label="📥 Download Plot (PNG)",
                 data=buf,
-                file_name=f"{st.session_state.design['name']}_pk_plot.png",
+                file_name=f"{st.session_state.design.get('Material', 'design')}_pk_plot.png",
                 mime="image/png",
                 use_container_width=True
             )
+        
+        # Add PDF report download button
+        st.markdown("")
+        st.markdown("### 📄 Generate Report")
+        
+        col_pdf1, col_pdf2 = st.columns([1, 2])
+        
+        with col_pdf1:
+            if st.button("📋 Generate PDF Report", type="primary", use_container_width=True):
+                with st.spinner("Creating PDF report..."):
+                    try:
+                        pdf_buffer = generate_pdf_report(
+                            st.session_state.design,
+                            results['pk_params'],
+                            results,
+                            fig
+                        )
+                        st.session_state.pdf_report = pdf_buffer
+                        st.success("✅ PDF report created!")
+                    except Exception as e:
+                        st.error(f"Error generating PDF: {str(e)}")
+        
+        with col_pdf2:
+            if st.session_state.pdf_report:
+                st.download_button(
+                    label="📥 Download PDF Report",
+                    data=st.session_state.pdf_report,
+                    file_name=f"{st.session_state.design.get('Material', 'design')}_simulation_report.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+            else:
+                st.info("👆 Click **Generate PDF Report** to create the report first")
     
     else:
         st.info("👆 Click **Run Simulation** to generate pharmacokinetic profiles")

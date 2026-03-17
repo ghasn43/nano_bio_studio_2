@@ -326,13 +326,13 @@ def calculate_overall_safety_score(design: Dict) -> Dict:
     """
     
     # Individual risk scores
-    size_risk, size_exp = calculate_size_risk(design['size'])
-    charge_risk, charge_exp = calculate_charge_risk(design['charge'], design['size'])
-    dose_risk, dose_exp = calculate_dose_risk(design['dose'], design['size'])
-    pdi_risk, pdi_exp = calculate_pdi_risk(design['pdi'])
-    ligand_risk, ligand_exp = calculate_ligand_risk(design['ligand'], design['charge'])
-    payload_risk, payload_exp = calculate_payload_risk(design['payload'], design['payload_amount'])
-    material_risk, material_exp = calculate_material_risk(design['material'], design['size'])
+    size_risk, size_exp = calculate_size_risk(design.get('Size', 100))
+    charge_risk, charge_exp = calculate_charge_risk(design.get('Charge', -5), design.get('Size', 100))
+    dose_risk, dose_exp = calculate_dose_risk(design.get('dose', 10.0), design.get('Size', 100))
+    pdi_risk, pdi_exp = calculate_pdi_risk(design.get('PDI', 0.15))
+    ligand_risk, ligand_exp = calculate_ligand_risk(design.get('Ligand', 'GalNAc'), design.get('Charge', -5))
+    payload_risk, payload_exp = calculate_payload_risk(design.get('payload', 'Drug'), design.get('payload_amount', 1.0))
+    material_risk, material_exp = calculate_material_risk(design.get('Material', 'Lipid NP'), design.get('Size', 100))
     
     # Weighted overall score
     weights = {

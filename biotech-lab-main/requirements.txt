@@ -7,3 +7,4 @@ plotly>=5.18.0
 optuna>=3.6.0
 sqlalchemy>=2.0.0
 bcrypt>=4.0.0
+reportlab>=4.0.0

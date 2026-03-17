@@ -70,9 +70,9 @@ def show():
                 st.warning(f"⚠️ **Limitations:** {np['limitations']}")
                 
                 if st.button(f"Use {np['name']} in Design", key=f"use_{np['id']}"):
-                    st.session_state.design['material'] = np['name']
-                    st.session_state.design['size'] = sum(np['typical_size_range']) / 2
-                    st.session_state.design['charge'] = sum(np['typical_charge_range']) / 2
+                    st.session_state.design['Material'] = np['name']
+                    st.session_state.design['Size'] = sum(np['typical_size_range']) / 2
+                    st.session_state.design['Charge'] = sum(np['typical_charge_range']) / 2
                     st.success(f"✅ {np['name']} loaded into design!")
                     st.info("Go to **Design Nanoparticle** page to customize parameters")
     

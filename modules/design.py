@@ -23,13 +23,16 @@ def show():
     with col1:
         st.subheader("Basic Properties")
         
-        st.session_state.design['name'] = st.text_input(
+        # Store name in session (not used in design dict for simulation)
+        design_name = st.text_input(
             "Formulation Name",
-            st.session_state.design['name'],
+            st.session_state.design.get('FormulationName', ''),
             help="Unique identifier for your nanoparticle design"
         )
+        if design_name:
+            st.session_state.design['FormulationName'] = design_name
         
-        st.session_state.design['material'] = st.selectbox(
+        st.session_state.design['Material'] = st.selectbox(
             "Nanoparticle Type",
             [
                 "Lipid Nanoparticle (LNP)",
@@ -43,34 +46,34 @@ def show():
                 "Metal-Organic Framework (MOF)",
                 "Exosome"
             ],
-            index=0 if st.session_state.design['material'] == "Lipid Nanoparticle" else 
-                  [i for i, m in enumerate(["Lipid Nanoparticle (LNP)", "Gold Nanoparticle (AuNP)", "Polymeric Nanoparticle (PLGA)", "Silica Nanoparticle (MSN)", "Liposome", "Quantum Dot (QD)", "Carbon Nanotube (CNT)", "Dendrimer", "Metal-Organic Framework (MOF)", "Exosome"]) if st.session_state.design['material'] in m][0] if any(st.session_state.design['material'] in m for m in ["Lipid Nanoparticle (LNP)", "Gold Nanoparticle (AuNP)", "Polymeric Nanoparticle (PLGA)", "Silica Nanoparticle (MSN)", "Liposome", "Quantum Dot (QD)", "Carbon Nanotube (CNT)", "Dendrimer", "Metal-Organic Framework (MOF)", "Exosome"]) else 0,
+            index=0 if st.session_state.design.get('Material', 'Lipid NP') == "Lipid Nanoparticle" else 
+                  [i for i, m in enumerate(["Lipid Nanoparticle (LNP)", "Gold Nanoparticle (AuNP)", "Polymeric Nanoparticle (PLGA)", "Silica Nanoparticle (MSN)", "Liposome", "Quantum Dot (QD)", "Carbon Nanotube (CNT)", "Dendrimer", "Metal-Organic Framework (MOF)", "Exosome"]) if st.session_state.design.get('Material', 'Lipid NP') in m][0] if any(st.session_state.design.get('Material', 'Lipid NP') in m for m in ["Lipid Nanoparticle (LNP)", "Gold Nanoparticle (AuNP)", "Polymeric Nanoparticle (PLGA)", "Silica Nanoparticle (MSN)", "Liposome", "Quantum Dot (QD)", "Carbon Nanotube (CNT)", "Dendrimer", "Metal-Organic Framework (MOF)", "Exosome"]) else 0,
             help="Select the base nanoparticle platform"
         )
         
-        st.session_state.design['size'] = st.slider(
+        st.session_state.design['Size'] = st.slider(
             "Size (nm)",
             min_value=1.0,
             max_value=500.0,
-            value=float(st.session_state.design['size']),
+            value=float(st.session_state.design.get('Size', 100)),
             step=1.0,
             help="Hydrodynamic diameter - affects biodistribution, clearance, and EPR effect"
         )
         
-        st.session_state.design['charge'] = st.slider(
+        st.session_state.design['Charge'] = st.slider(
             "Surface Charge (mV)",
             min_value=-50.0,
             max_value=50.0,
-            value=float(st.session_state.design['charge']),
+            value=float(st.session_state.design.get('Charge', -5)),
             step=1.0,
             help="Zeta potential - affects stability, cell uptake, and toxicity"
         )
         
-        st.session_state.design['pdi'] = st.slider(
+        st.session_state.design['PDI'] = st.slider(
             "Polydispersity Index (PDI)",
             min_value=0.01,
             max_value=0.50,
-            value=float(st.session_state.design['pdi']),
+            value=float(st.session_state.design.get('PDI', 0.15)),
             step=0.01,
             help="Particle size uniformity - lower values indicate more uniform distribution"
         )
@@ -78,7 +81,7 @@ def show():
     with col2:
         st.subheader("Surface Modification & Payload")
         
-        st.session_state.design['ligand'] = st.selectbox(
+        st.session_state.design['Ligand'] = st.selectbox(
             "Surface Ligand",
             [
                 "PEG (Polyethylene Glycol)",
@@ -97,11 +100,12 @@ def show():
                 "PEG (Polyethylene Glycol)", "PEG2000", "Cholesterol", "Citrate",
                 "Thiol-PEG", "Antibody (mAb)", "RGD Peptide", "Folate",
                 "Transferrin", "Hyaluronic Acid", "None"
-            ].index("PEG (Polyethylene Glycol)") if "PEG" in st.session_state.design['ligand'] else 0,
+            ].index("PEG (Polyethylene Glycol)") if "PEG" in st.session_state.design.get('Ligand', 'GalNAc') else 0,
             help="Surface coating for stealth effect and targeting"
         )
         
-        st.session_state.design['payload'] = st.selectbox(
+        # Store payload name (not in core design dict for simulation)
+        payload_name = st.selectbox(
             "Therapeutic Payload",
             [
                 "mRNA",
@@ -119,24 +123,26 @@ def show():
                 "mRNA", "siRNA", "DNA (plasmid)", "Small molecule drug",
                 "Protein/Peptide", "Antibody", "CRISPR-Cas9 RNP",
                 "Imaging agent", "Combination (drug + RNA)", "None"
-            ].index(st.session_state.design['payload']) if st.session_state.design['payload'] in [
+            ].index(st.session_state.design.get('payload_type', 'mRNA')) if st.session_state.design.get('payload_type', 'mRNA') in [
                 "mRNA", "siRNA", "DNA (plasmid)", "Small molecule drug",
                 "Protein/Peptide", "Antibody", "CRISPR-Cas9 RNP",
                 "Imaging agent", "Combination (drug + RNA)", "None"
             ] else 0,
             help="Therapeutic or diagnostic cargo"
         )
+        if payload_name:
+            st.session_state.design['payload_type'] = payload_name
         
-        st.session_state.design['payload_amount'] = st.slider(
+        st.session_state.design['Encapsulation'] = st.slider(
             "Payload Loading (%w/w)",
             min_value=0.1,
             max_value=100.0,
-            value=float(st.session_state.design['payload_amount']),
+            value=float(st.session_state.design.get('Encapsulation', 70)),
             step=0.1,
             help="Weight percentage of payload relative to total nanoparticle"
         )
         
-        st.session_state.design['target'] = st.selectbox(
+        st.session_state.design['Target'] = st.selectbox(
             "Biological Target",
             [
                 "Tumor Tissue (Solid)",

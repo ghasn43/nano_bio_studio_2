@@ -18,7 +18,7 @@ MIN_PASSWORD_LENGTH = 6
 PASSWORD_REGEX = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{' + str(MIN_PASSWORD_LENGTH) + ',}$'
 
 # Session settings
-SESSION_TIMEOUT_MINUTES = 30  # 30 minute timeout for inactive sessions
+SESSION_TIMEOUT_MINUTES = 15  # 15 minute timeout for inactive sessions
 ACTIVITY_LOG_ENABLED = True  # Enable activity logging
 
 

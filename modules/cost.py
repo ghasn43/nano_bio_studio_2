@@ -8,7 +8,7 @@ import pandas as pd
 def calculate_material_cost(design: dict, batch_size: float, cost_params: dict) -> dict:
     """Calculate material costs for nanoparticle production"""
     
-    material_name = design['material'].lower()
+    material_name = design.get('Material', 'Lipid NP').lower()
     
     # Base material cost per gram (USD)
     material_costs = {
@@ -45,7 +45,7 @@ def calculate_material_cost(design: dict, batch_size: float, cost_params: dict) 
 def calculate_ligand_cost(design: dict, batch_size: float, cost_params: dict) -> dict:
     """Calculate ligand/surface modification costs"""
     
-    ligand_name = design['ligand'].lower()
+    ligand_name = design.get('Ligand', 'GalNAc').lower()
     
     # Ligand costs per gram (USD)
     ligand_costs = {
@@ -477,8 +477,8 @@ def show():
 NANOBIO STUDIO - COST ANALYSIS REPORT
 ======================================
 
-Formulation: {st.session_state.design['name']}
-Material: {st.session_state.design['material']}
+Formulation: {st.session_state.design.get('FormulationName', 'Design')}
+Material: {st.session_state.design.get('Material', 'Lipid NP')}
 Target: {st.session_state.design['target']}
 
 PRODUCTION PARAMETERS:
@@ -530,7 +530,7 @@ Experts Group FZE
             st.download_button(
                 label="📥 Download Cost Report (TXT)",
                 data=report_text,
-                file_name=f"{st.session_state.design['name']}_cost_analysis.txt",
+                file_name=f"{st.session_state.design.get('FormulationName', 'design')}_cost_analysis.txt",
                 mime="text/plain",
                 use_container_width=True
             )
@@ -538,7 +538,7 @@ Experts Group FZE
         with col_export2:
             # Export as CSV
             df_export = pd.DataFrame([{
-                'Formulation': st.session_state.design['name'],
+                'Formulation': st.session_state.design.get('FormulationName', 'Design'),
                 'Batch_Size_mg': results['batch_size'],
                 'Total_Batch_Cost_USD': results['total_production_cost'],
                 'Cost_per_mg_USD': results['cost_per_mg'],
@@ -557,7 +557,7 @@ Experts Group FZE
             st.download_button(
                 label="📥 Download Cost Data (CSV)",
                 data=csv_export,
-                file_name=f"{st.session_state.design['name']}_cost_data.csv",
+                file_name=f"{st.session_state.design.get('FormulationName', 'design')}_cost_data.csv",
                 mime="text/csv",
                 use_container_width=True
             )

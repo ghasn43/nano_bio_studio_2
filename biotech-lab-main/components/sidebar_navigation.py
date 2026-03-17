@@ -1,24 +1,40 @@
 """
 Sidebar Navigation Renderer
 Displays unified navigation structure in Streamlit sidebar
+Implements role-based access control
 """
 
 import streamlit as st
 from components.navigation_config import NAVIGATION_STRUCTURE
 
+def get_user_role():
+    """Get current user's role"""
+    return st.session_state.get("role", "viewer").lower()
+
+def is_admin():
+    """Check if user is admin"""
+    return get_user_role() == "admin"
+
+def is_scientist():
+    """Check if user is scientist/research role"""
+    return get_user_role() in ["scientist", "research"]
+
 def render_sidebar_navigation():
     """
     Render the unified sidebar navigation menu
     Organized by categories with descriptions
+    Implements role-based filtering
     """
     
     with st.sidebar:
         st.markdown("---")
         st.markdown("## 📋 Navigation Menu")
         st.markdown("---")
-        
-        # Display each category
         for category, config in NAVIGATION_STRUCTURE.items():
+            # Hide admin section from non-admin users
+            if "⚙️ Administration" in category and not is_admin():
+                continue
+            
             # Category header with expander
             with st.expander(f"**{category}**", expanded=False):
                 description = config.get("description", "")
@@ -66,7 +82,17 @@ def render_sidebar_navigation():
             st.markdown("---")
             st.markdown(f"**User:** {st.session_state.username}")
             if 'role' in st.session_state:
-                st.markdown(f"**Role:** {st.session_state.role}")
+                role_badge = "👑 Admin" if is_admin() else "🔬 Scientist" if is_scientist() else "👁️ Viewer"
+                st.markdown(f"**Role:** {role_badge}")
+            
+            # Logout button
+            st.markdown("---")
+            if st.button("🚪 Logout", use_container_width=True, key="logout_btn"):
+                st.session_state.logged_in = False
+                st.session_state.username = None
+                st.session_state.role = None
+                st.success("✅ You have been logged out.")
+                st.switch_page("pages/0_Auth.py")
 
 def render_mobile_navigation():
     """

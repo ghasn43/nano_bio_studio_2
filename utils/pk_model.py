@@ -234,7 +234,7 @@ def create_pk_plot(
     
     ax1.set_xlabel('Time (hours)', fontsize=11)
     ax1.set_ylabel('Concentration (arbitrary units)', fontsize=11)
-    ax1.set_title(f'Pharmacokinetic Profile: {design["name"]} ({design["material"]})', fontsize=12, fontweight='bold')
+    ax1.set_title(f'Pharmacokinetic Profile: {design.get("Material", "Lipid NP")} ({design.get("Target", "Liver Cells")})', fontsize=12, fontweight='bold')
     ax1.legend(loc='best', framealpha=0.9)
     ax1.grid(True, alpha=0.3)
     ax1.set_xlim(0, time[-1])
